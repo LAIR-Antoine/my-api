@@ -27,6 +27,10 @@ class StravaController extends Controller
 
     public function stravaAuth()
     {
+        $user = User::find(auth()->id());
+        $user->strava_access_token = null;
+        $user->strava_refresh_token = null;
+        $user->save();
         return Strava::authenticate($scope='read_all,profile:read_all,activity:read_all');
     }
 
