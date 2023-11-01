@@ -16,6 +16,7 @@
                             <tr>
                                 <th class="border border-slate-600">Sport</th>
                                 <th class="border border-slate-600" colspan="2">Objectifs</th>
+                                <th class="border border-slate-600" colspan="2">Dates</th>
                                 <th class="border border-slate-600">Statut</th>
                                 <th class="border border-slate-600">Actions</th>
                             </tr>
@@ -24,8 +25,10 @@
                             @foreach ($distanceGoals as $distanceGoal)
                                 <tr>
                                     <td class="border border-slate-600">{{ $distanceGoal->sport }}</td>
-                                    <td class="border border-slate-600">{{ $distanceGoal->distance_done }} km</td>
+                                    <td class="border border-slate-600">{{ str_replace('.', ',', $distanceGoal->distance_done) }} km</td>
                                     <td class="border border-slate-600">{{ $distanceGoal->distance_to_do }} km</td>
+                                    <td class="border border-slate-600">{{ date("d/m/Y", strtotime($distanceGoal->begin_date)) }}</td>
+                                    <td class="border border-slate-600">{{ date("d/m/Y", strtotime($distanceGoal->end_date)) }}</td>
                                     <td class="border border-slate-600">{{ $distanceGoal->state }}</td>
                                     <td class="border border-slate-600">
                                         <a href="{{ route('distance_goal.edit', $distanceGoal->id) }}" class="text-blue-500 hover:text-blue-800">Modifier</a>

@@ -10,7 +10,7 @@ class DistanceGoalController extends Controller
 {
     public function index()
     {
-        $distanceGoals = DistanceGoal::latest()->paginate(5);
+        $distanceGoals = DistanceGoal::all();
 
         return view('distance_goal.index', compact('distanceGoals'));
     }
