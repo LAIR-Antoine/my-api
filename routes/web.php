@@ -31,6 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('distance_goal', DistanceGoalController::class);
+Route::resource('distance_goal', DistanceGoalController::class)->middleware(['auth', 'verified'])->name('index', 'distance_goal');
 
 require __DIR__.'/auth.php';

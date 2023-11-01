@@ -15,6 +15,11 @@ class DistanceGoalController extends Controller
         return view('distance_goal.index', compact('distanceGoals'));
     }
 
+    public function create()
+    {
+        return view('distance_goal.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -39,7 +44,7 @@ class DistanceGoalController extends Controller
 
     public function edit(DistanceGoal $distance_goal)
     {
-        return view('distance_goal', compact('distance_goal'));
+        return view('distance_goal.edit', compact('distance_goal'));
     }
 
     public function update(Request $request, DistanceGoal $distance_goal)
