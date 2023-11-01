@@ -88,6 +88,7 @@ class StravaController extends Controller
             }
         }
 
+        return redirect()->route('dashboard');
         
     }
 
@@ -130,7 +131,7 @@ class StravaController extends Controller
         }
         
 
-        
+        return redirect()->route('dashboard');
     }
 
     public function refreshGoals() {
