@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('distance_goal')" :active="request()->routeIs('distance_goal')">
                         {{ __('Objectifs') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('stats')" :active="request()->routeIs('stats')">
+                        {{ __('Statistiques') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -75,6 +78,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('distance_goal')" :active="request()->routeIs('distance_goal')">
                 {{ __('Objectifs') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('stats')" :active="request()->routeIs('stats')">
+                {{ __('Statistiques') }}
             </x-responsive-nav-link>
         </div>
 

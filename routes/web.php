@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DistanceGoalController;
 use App\Http\Controllers\StravaController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ Route::get('/dashboard', [StravaController::class, 'dashboard'])->middleware(['a
 Route::get('/strava/auth', [StravaController::class, 'stravaAuth'])->middleware(['auth', 'verified'])->name('strava.auth');
 Route::get('/strava/sync', [StravaController::class, 'syncActivities'])->middleware(['auth', 'verified'])->name('strava.sync');
 Route::get('/strava/sync/all', [StravaController::class, 'syncAllActivities'])->middleware(['auth', 'verified'])->name('strava.sync.all');
+
+Route::get('/stats', [StatsController::class, 'index'])->middleware(['auth', 'verified'])->name('stats');
+Route::get('/stats/{year}', [StatsController::class, 'monthStats'])->middleware(['auth', 'verified'])->name('stats.months');
 
 
 Route::middleware('auth')->group(function () {
