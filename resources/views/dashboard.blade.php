@@ -70,7 +70,7 @@
         padding: 0.5rem 1rem;
         border-radius: 5px;
         color: white;
-        margin: 10px;
+        margin: 20px 10px;
         font-weight: bold;  
     }
     .strava-button {
