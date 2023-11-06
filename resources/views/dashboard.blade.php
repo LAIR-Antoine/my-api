@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <a class="button strava-button" href={{ route('strava.auth') }}>Se connecter à Strava</a> 
-                    <br>
+                    <br><br>
                     <a class="button blue-button" href={{ route('welcome') }}>Vue classique</a>
-                    <br>
+                    <br><br>
                      <a class="button strava-button" href={{ route('strava.sync') }}>Synchroniser les activitiés Strava</a> 
                     
 
