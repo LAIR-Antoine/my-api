@@ -1177,8 +1177,8 @@
         #sportTimeChart2,
         #sportTimeChart3 {
 
-            max-width: 400px;
-            max-height: 200px;
+            max-width: 350px;
+            max-height: 175px;
             margin: 30px auto;
         }
 
