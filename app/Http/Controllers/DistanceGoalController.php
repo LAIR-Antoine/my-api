@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\DistanceGoal;
+use App\Models\Activities;
+use Carbon\Carbon;
 
 class DistanceGoalController extends Controller
 {
@@ -89,10 +91,87 @@ class DistanceGoalController extends Controller
             } else if ($today > $goal->end_date) {
                 $goal->gapGoal = $goal->distance_done - $goal->distance_to_do;
             }
-            //dd($goal->gapGoal);
-
         }
 
-        return view('welcome', compact('activeGoals'));
+        $currentWeekStart = Carbon::now()->startOfWeek();
+        $currentWeekEnd = Carbon::now()->endOfWeek();
+
+        $pastWeekStart = Carbon::now()->startOfWeek()->subWeek();
+        $pastWeekEnd = Carbon::now()->endOfWeek()->subWeek();
+
+        $currentWeekDates = [];
+        $pastWeekDates = [];
+
+        for ($date = $currentWeekStart; $date <= $currentWeekEnd; $date->addDay()) {
+            $currentWeekDates[] = $date->toDateString();
+        }
+
+        for ($date = $pastWeekStart; $date <= $pastWeekEnd; $date->addDay()) {
+            $pastWeekDates[] = $date->toDateString();
+        }
+
+        $currentWeekActivities = [];
+        $pastWeekActivities = [];
+
+        $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+
+        foreach ($currentWeekDates as $index => $date) {
+
+            $day = date('d', strtotime($date));
+            $month = date('m', strtotime($date));
+            $currentWeekActivities['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
+
+            $currentWeekActivitiesDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')->where('start_date_local', '<=', $date . ' 23:59:59')->get();
+            foreach ($currentWeekActivitiesDB as $activity) {
+                if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                    $currentWeekActivities[1][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Run') {
+                    $currentWeekActivities[2][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Swim') {
+                    $currentWeekActivities[0][$index] = $activity->moving_time / 3600;
+                }
+            }
+            if (!isset($currentWeekActivities[0][$index])) {
+                $currentWeekActivities[0][$index] = 0;
+            }
+            if (!isset($currentWeekActivities[1][$index])) {
+                $currentWeekActivities[1][$index] = 0;
+            }
+            if (!isset($currentWeekActivities[2][$index])) {
+                $currentWeekActivities[2][$index] = 0;
+            }
+        }
+        
+        foreach ($pastWeekDates as $index => $date) {
+
+            $day = date('d', strtotime($date));
+            $month = date('m', strtotime($date));
+            $pastWeekActivities['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
+            $pastWeekActivitiesDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')->where('start_date_local', '<=', $date . ' 23:59:59')->get();
+            foreach ($pastWeekActivitiesDB as $activity) {
+                if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                    $pastWeekActivities[1][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Run') {
+                    $pastWeekActivities[2][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Swim') {
+                    $pastWeekActivities[0][$index] = $activity->moving_time / 3600;
+                }
+            }
+            if (!isset($pastWeekActivities[0][$index])) {
+                $pastWeekActivities[0][$index] = 0;
+            }
+            if (!isset($pastWeekActivities[1][$index])) {
+                $pastWeekActivities[1][$index] = 0;
+            }
+            if (!isset($pastWeekActivities[2][$index])) {
+                $pastWeekActivities[2][$index] = 0;
+            }
+        }
+
+        //dd($currentWeekActivities, $pastWeekActivities);
+
+
+
+        return view('welcome', compact('activeGoals', 'currentWeekActivities', 'pastWeekActivities'));
     }
 }
