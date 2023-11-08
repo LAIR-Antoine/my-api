@@ -1,5 +1,6 @@
 {
     "private": true,
+    "license": "MPL2.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
