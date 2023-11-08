@@ -1173,13 +1173,6 @@
             margin: 30px auto;
         }
 
-        h2 {
-            margin-top: 50px;
-
-        }
-
-
-
 /*         * {
             font-family: sans-serif;
             text-align: center;
