@@ -211,8 +211,6 @@ class DistanceGoalController extends Controller
         $pastOneWeekNumberActivities = Activities::where('start_date_local', '>=', $pastOneStart . ' 00:00:00')->where('start_date_local', '<=', $pastOneEnd . ' 23:59:59')->get();
         $currentWeekNumberActivities = Activities::where('start_date_local', '>=', $currentWeekStart . ' 00:00:00')->where('start_date_local', '<=', $currentWeekEnd . ' 23:59:59')->get();
 
-        dd($pastOneWeekNumberActivities);
-
         foreach ($pastFourWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][0] = isset($fiveLastWeeks[1][0]) ? $fiveLastWeeks[1][0] : 0 + ($activity->moving_time / 3600);
@@ -246,6 +244,7 @@ class DistanceGoalController extends Controller
         foreach ($pastOneWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][3] = isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : 0 + ($activity->moving_time / 3600);
+                var_dump($fiveLastWeeks[1][3]);
             } else if ($activity->type == 'Run') {
                 $fiveLastWeeks[2][3] = isset($fiveLastWeeks[2][3]) ? $fiveLastWeeks[2][3] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
