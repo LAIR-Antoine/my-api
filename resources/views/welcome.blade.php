@@ -1171,12 +1171,12 @@
 
         }
 
-        * {
+/*         * {
             font-family: sans-serif;
             text-align: center;
             color: rgba(0, 0, 128, 1);
             background-color: rgba(240, 240, 240, 1);
-        }
+        } */
     </style>
 </body>
 
