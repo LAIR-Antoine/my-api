@@ -170,8 +170,145 @@ class DistanceGoalController extends Controller
 
         //dd($currentWeekActivities, $pastWeekActivities);
 
+        $fiveLastWeeks = $this->getFiveLastWeeksForChart();
 
+        return view('welcome', compact('activeGoals', 'currentWeekActivities', 'pastWeekActivities', 'fiveLastWeeks'));
+    }
 
-        return view('welcome', compact('activeGoals', 'currentWeekActivities', 'pastWeekActivities'));
+    public function getFiveLastWeeksForChart() {
+        
+        $currentWeekStart = Carbon::now()->startOfWeek();
+        $currentWeekEnd = Carbon::now()->endOfWeek();
+        $currentWeekNumber = Carbon::now()->weekOfYear;
+    
+        $pastOneStart = Carbon::now()->startOfWeek()->subWeek(1);
+        $pastOneEnd = Carbon::now()->endOfWeek()->subWeek(1);
+        $pastOneWeekNumber = Carbon::now()->subWeek(1)->weekOfYear;
+    
+        $pastTwoStart = Carbon::now()->startOfWeek()->subWeek(2);
+        $pastTwoEnd = Carbon::now()->endOfWeek()->subWeek(2);
+        $pastTwoWeekNumber = Carbon::now()->subWeek(2)->weekOfYear;
+
+        $pastThreeStart = Carbon::now()->startOfWeek()->subWeek(3);
+        $pastThreeEnd = Carbon::now()->endOfWeek()->subWeek(3);
+        $pastThreeWeekNumber = Carbon::now()->subWeek(3)->weekOfYear;
+
+        $pastFourStart = Carbon::now()->startOfWeek()->subWeek(4);
+        $pastFourEnd = Carbon::now()->endOfWeek()->subWeek(4);
+        $pastFourWeekNumber = Carbon::now()->subWeek(4)->weekOfYear;
+        
+        $fiveLastWeeks['dates'] = [
+            'S ' . $pastFourWeekNumber,
+            'S ' . $pastThreeWeekNumber,
+            'S ' . $pastTwoWeekNumber,
+            'S ' . $pastOneWeekNumber,
+            'S ' . $currentWeekNumber
+        ];
+
+        $pastFourWeekNumberActivities = Activities::where('start_date_local', '>=', $pastFourStart . ' 00:00:00')->where('start_date_local', '<=', $pastFourEnd . ' 23:59:59')->get();
+        $pastThreeWeekNumberActivities = Activities::where('start_date_local', '>=', $pastThreeStart . ' 00:00:00')->where('start_date_local', '<=', $pastThreeEnd . ' 23:59:59')->get();
+        $pastTwoWeekNumberActivities = Activities::where('start_date_local', '>=', $pastTwoStart . ' 00:00:00')->where('start_date_local', '<=', $pastTwoEnd . ' 23:59:59')->get();
+        $pastOneWeekNumberActivities = Activities::where('start_date_local', '>=', $pastOneStart . ' 00:00:00')->where('start_date_local', '<=', $pastOneEnd . ' 23:59:59')->get();
+        $currentWeekNumberActivities = Activities::where('start_date_local', '>=', $currentWeekStart . ' 00:00:00')->where('start_date_local', '<=', $currentWeekEnd . ' 23:59:59')->get();
+
+        foreach ($pastFourWeekNumberActivities as $activity) {
+            if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                $fiveLastWeeks[1][0] = $fiveLastWeeks[1][0] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Run') {
+                $fiveLastWeeks[2][0] =  $fiveLastWeeks[2][0] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Swim') {
+                $fiveLastWeeks[0][0] = $fiveLastWeeks[0][0] + $activity->moving_time / 3600;
+            }
+        }
+
+        foreach ($pastThreeWeekNumberActivities as $activity) {
+            if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                $fiveLastWeeks[1][1] = $fiveLastWeeks[1][1] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Run') {
+                $fiveLastWeeks[2][1] = $fiveLastWeeks[2][1] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Swim') {
+                $fiveLastWeeks[0][1] = $fiveLastWeeks[0][1] + $activity->moving_time / 3600;
+            }
+        }
+
+        foreach ($pastTwoWeekNumberActivities as $activity) {
+            if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                $fiveLastWeeks[1][2] = $fiveLastWeeks[1][2] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Run') {
+                $fiveLastWeeks[2][2] = $fiveLastWeeks[2][2] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Swim') {
+                $fiveLastWeeks[0][2] = $fiveLastWeeks[0][2] + $activity->moving_time / 3600;
+            }
+        }
+
+        foreach ($pastOneWeekNumberActivities as $activity) {
+            if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                $fiveLastWeeks[1][3] = $fiveLastWeeks[1][3] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Run') {
+                $fiveLastWeeks[2][3] = $fiveLastWeeks[2][3] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Swim') {
+                $fiveLastWeeks[0][3] = $fiveLastWeeks[0][3] + $activity->moving_time / 3600;
+            }
+        }
+
+        foreach ($currentWeekNumberActivities as $activity) {
+            if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                $fiveLastWeeks[1][4] = $fiveLastWeeks[1][4] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Run') {
+                $fiveLastWeeks[2][4] = $fiveLastWeeks[2][4] + $activity->moving_time / 3600;
+            } else if ($activity->type == 'Swim') {
+                $fiveLastWeeks[0][4] = $fiveLastWeeks[0][4] + $activity->moving_time / 3600;
+            }
+        }
+
+        if (!isset($fiveLastWeeks[0][0])) {
+            $fiveLastWeeks[0][0] = 0;
+        }
+        if (!isset($fiveLastWeeks[0][1])) {
+            $fiveLastWeeks[0][1] = 0;
+        }
+        if (!isset($fiveLastWeeks[0][2])) {
+            $fiveLastWeeks[0][2] = 0;
+        }
+        if (!isset($fiveLastWeeks[0][3])) {
+            $fiveLastWeeks[0][3] = 0;
+        }
+        if (!isset($fiveLastWeeks[0][4])) {
+            $fiveLastWeeks[0][4] = 0;
+        }
+
+        if (!isset($fiveLastWeeks[1][0])) {
+            $fiveLastWeeks[1][0] = 0;
+        }
+        if (!isset($fiveLastWeeks[1][1])) {
+            $fiveLastWeeks[1][1] = 0;
+        }
+        if (!isset($fiveLastWeeks[1][2])) {
+            $fiveLastWeeks[1][2] = 0;
+        }
+        if (!isset($fiveLastWeeks[1][3])) {
+            $fiveLastWeeks[1][3] = 0;
+        }
+        if (!isset($fiveLastWeeks[1][4])) {
+            $fiveLastWeeks[1][4] = 0;
+        }
+
+        if (!isset($fiveLastWeeks[2][0])) {
+            $fiveLastWeeks[2][0] = 0;
+        }
+        if (!isset($fiveLastWeeks[2][1])) {
+            $fiveLastWeeks[2][1] = 0;
+        }
+        if (!isset($fiveLastWeeks[2][2])) {
+            $fiveLastWeeks[2][2] = 0;
+        }
+        if (!isset($fiveLastWeeks[2][3])) {
+            $fiveLastWeeks[2][3] = 0;
+        }
+        if (!isset($fiveLastWeeks[2][4])) {
+            $fiveLastWeeks[2][4] = 0;
+        }
+
+        return $fiveLastWeeks;
     }
 }

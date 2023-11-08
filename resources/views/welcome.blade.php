@@ -893,7 +893,6 @@
     <h2>Semaine en cours</h2>
     <canvas id="sportTimeChart2" width="400" height="200"></canvas>
 
-    <p>Ce graphique est actuellement statique, pour tester...</p>
     <h2>5 dernières semaines</h2>
     <canvas id="sportTimeChart3" width="400" height="200"></canvas>
     <script>
@@ -1005,38 +1004,10 @@
             }
         });
 
-        var weekOfYear = ['S 41', 'S 42', 'S 43', 'S 44', 'S 45'];
-        var swimMinutesWeek = [70, 39, 35, 52, 0];
-        var swimWeek = [];
-        swimMinutesWeek.forEach(function(item, index) {
-            if (item == 0) {
-                swimWeek[index] = 0;
-            } else {
-                toHour = item / 60;
-                swimWeek[index] = toHour;
-            }
-        });
-        var bikeMinutesWeek = [249, 97, 341, 286, 41];
-        var bikeWeek = [];
-        bikeMinutesWeek.forEach(function(item, index) {
-            if (item == 0) {
-                bikeWeek[index] = 0;
-            } else {
-                toHour = item / 60;
-                bikeWeek[index] = toHour;
-            }
-        });
-
-        var runMinutesWeek = [97, 189, 79, 140, 0];
-        var runWeek = [];
-        runMinutesWeek.forEach(function(item, index) {
-            if (item == 0) {
-                runWeek[index] = 0;
-            } else {
-                toHour = item / 60;
-                runWeek[index] = toHour;
-            }
-        });
+        var weekOfYear = @json($fiveLastWeeks['dates']);
+        var swimWeek = @json($fiveLastWeeks[0]);
+        var bikeWeek = @json($fiveLastWeeks[1]);
+        var runWeek = @json($fiveLastWeeks[2]);
 
         var ctx3 = document.getElementById('sportTimeChart3').getContext('2d');
         var chart3 = new Chart(ctx3, {
