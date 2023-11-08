@@ -1131,6 +1131,9 @@
             justify-content: center;
             margin: 50px
         }
+        .chartLine canvas {
+            margin: 0 50px;
+        }
 
         .refresh-button {
             position: fixed;
