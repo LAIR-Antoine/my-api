@@ -213,51 +213,51 @@ class DistanceGoalController extends Controller
 
         foreach ($pastFourWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                $fiveLastWeeks[1][0] = isset($fiveLastWeeks[1][0]) ? $fiveLastWeeks[1][0] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[1][0] = isset($fiveLastWeeks[1][0]) ? $fiveLastWeeks[1][0] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Run') {
-                $fiveLastWeeks[2][0] =  isset($fiveLastWeeks[2][0]) ? $fiveLastWeeks[2][0] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[2][0] =  isset($fiveLastWeeks[2][0]) ? $fiveLastWeeks[2][0] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
-                $fiveLastWeeks[0][0] =  isset($fiveLastWeeks[0][0]) ? $fiveLastWeeks[0][0] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[0][0] =  isset($fiveLastWeeks[0][0]) ? $fiveLastWeeks[0][0] : 0 + ($activity->moving_time / 3600);
             }
         }
 
         foreach ($pastThreeWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                $fiveLastWeeks[1][1] = isset($fiveLastWeeks[1][1]) ? $fiveLastWeeks[1][1] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[1][1] = isset($fiveLastWeeks[1][1]) ? $fiveLastWeeks[1][1] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Run') {
-                $fiveLastWeeks[2][1] = isset($fiveLastWeeks[2][1]) ? $fiveLastWeeks[2][1] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[2][1] = isset($fiveLastWeeks[2][1]) ? $fiveLastWeeks[2][1] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
-                $fiveLastWeeks[0][1] = isset($fiveLastWeeks[0][1]) ? $fiveLastWeeks[0][1] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[0][1] = isset($fiveLastWeeks[0][1]) ? $fiveLastWeeks[0][1] : 0 + ($activity->moving_time / 3600);
             }
         }
 
         foreach ($pastTwoWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                $fiveLastWeeks[1][2] = isset($fiveLastWeeks[1][2]) ? $fiveLastWeeks[1][2] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[1][2] = isset($fiveLastWeeks[1][2]) ? $fiveLastWeeks[1][2] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Run') {
-                $fiveLastWeeks[2][2] = isset($fiveLastWeeks[2][2]) ? $fiveLastWeeks[2][2] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[2][2] = isset($fiveLastWeeks[2][2]) ? $fiveLastWeeks[2][2] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
-                $fiveLastWeeks[0][2] = isset($fiveLastWeeks[0][2]) ? $fiveLastWeeks[0][2] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[0][2] = isset($fiveLastWeeks[0][2]) ? $fiveLastWeeks[0][2] : 0 + ($activity->moving_time / 3600);
             }
         }
 
         foreach ($pastOneWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                $fiveLastWeeks[1][3] = isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[1][3] = isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Run') {
-                $fiveLastWeeks[2][3] = isset($fiveLastWeeks[2][3]) ? $fiveLastWeeks[2][3] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[2][3] = isset($fiveLastWeeks[2][3]) ? $fiveLastWeeks[2][3] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
-                $fiveLastWeeks[0][3] = isset($fiveLastWeeks[0][3]) ? $fiveLastWeeks[0][3] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[0][3] = isset($fiveLastWeeks[0][3]) ? $fiveLastWeeks[0][3] : 0 + ($activity->moving_time / 3600);
             }
         }
 
         foreach ($currentWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                $fiveLastWeeks[1][4] = isset($fiveLastWeeks[1][4]) ? $fiveLastWeeks[1][4] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[1][4] = isset($fiveLastWeeks[1][4]) ? $fiveLastWeeks[1][4] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Run') {
-                $fiveLastWeeks[2][4] = isset($fiveLastWeeks[2][4]) ? $fiveLastWeeks[2][4] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[2][4] = isset($fiveLastWeeks[2][4]) ? $fiveLastWeeks[2][4] : 0 + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
-                $fiveLastWeeks[0][4] = isset($fiveLastWeeks[0][4]) ? $fiveLastWeeks[0][4] : 0 + $activity->moving_time / 3600;
+                $fiveLastWeeks[0][4] = isset($fiveLastWeeks[0][4]) ? $fiveLastWeeks[0][4] : 0 + ($activity->moving_time / 3600);
             }
         }
 
