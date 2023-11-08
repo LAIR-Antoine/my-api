@@ -1133,7 +1133,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 50px;
+            margin: 0 50px;
             font-family: sans-serif;
             text-align: center;
             color: rgba(0, 0, 128, 1);
