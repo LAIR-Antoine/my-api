@@ -896,8 +896,12 @@
             <canvas id="sportTimeChart2" width="400" height="200"></canvas>
         </div>
     </div>
-    <h2>5 dernières semaines</h2>
-    <canvas id="sportTimeChart3" width="400" height="200"></canvas>
+    <div class="chartLine">
+        <div>
+            <h2>5 dernières semaines</h2>
+            <canvas id="sportTimeChart3" width="400" height="200"></canvas>
+        </div>
+    </div>
     <script>
         var daysOfWeek = @json($pastWeekActivities['dates']);
         var swim = @json($pastWeekActivities[0]);
@@ -1129,7 +1133,10 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 50px
+            margin: 50px;
+            font-family: sans-serif;
+            text-align: center;
+            color: rgba(0, 0, 128, 1);
         }
         .chartLine div {
             margin: 0 50px;
@@ -1170,6 +1177,8 @@
             margin-top: 50px;
 
         }
+
+
 
 /*         * {
             font-family: sans-serif;
