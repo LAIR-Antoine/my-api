@@ -244,7 +244,7 @@ class DistanceGoalController extends Controller
         foreach ($pastOneWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][3] = isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : null + ($activity->moving_time / 3600);
-                var_dump($fiveLastWeeks[1][3]);
+                var_dump($fiveLastWeeks[1][3], $activity->moving_time);
             } else if ($activity->type == 'Run') {
                 $fiveLastWeeks[2][3] = isset($fiveLastWeeks[2][3]) ? $fiveLastWeeks[2][3] : null + ($activity->moving_time / 3600);
             } else if ($activity->type == 'Swim') {
