@@ -1170,7 +1170,7 @@
 
             max-width: 350px;
             max-height: 175px;
-            margin: 30px auto;
+            margin: 10px auto 30px auto; 
         }
 
 /*         * {
