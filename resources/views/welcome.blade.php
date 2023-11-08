@@ -886,13 +886,13 @@
             </div>
         @endforeach
     </div>
-    
-    <h2>Semaine dernière</h2>
-    <canvas id="sportTimeChart" width="400" height="200"></canvas>
+    <div class="chartLine">
+        <h2>Semaine dernière</h2>
+        <canvas id="sportTimeChart" width="400" height="200"></canvas>
 
-    <h2>Semaine en cours</h2>
-    <canvas id="sportTimeChart2" width="400" height="200"></canvas>
-
+        <h2>Semaine en cours</h2>
+        <canvas id="sportTimeChart2" width="400" height="200"></canvas>
+    </div>
     <h2>5 dernières semaines</h2>
     <canvas id="sportTimeChart3" width="400" height="200"></canvas>
     <script>
@@ -1116,6 +1116,13 @@
         }
 
         .goals-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 50px
+        }
+
+        .chartLine {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
