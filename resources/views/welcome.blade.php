@@ -1131,7 +1131,7 @@
             justify-content: center;
             margin: 50px
         }
-        .chartLine canvas {
+        .chartLine div {
             margin: 0 50px;
         }
 
