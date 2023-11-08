@@ -1126,7 +1126,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 50px 0 0 0;
+            margin: 50px 0 20px 0;
         }
 
         .chartLine {
