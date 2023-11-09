@@ -945,6 +945,7 @@
                     },
                     y: {
                         stacked: true,
+                        max: 3,
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1,
@@ -999,6 +1000,7 @@
                     },
                     y: {
                         stacked: true,
+                        max: 3,
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1,
