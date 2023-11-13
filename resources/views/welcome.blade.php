@@ -955,26 +955,28 @@
                         }
                     }
                 },
-                tooltips: {
-                    enabled: true,
-                    mode: 'index',
-                    intersect: false,
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            let label = data.datasets[tooltipItem.datasetIndex].label || '';
-                            if (label) {
-                                label += ': ';
+                plugins : {
+                    tooltips: {
+                        enabled: true,
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+
+                                // Convert decimal hours to hours, minutes, and seconds
+                                let totalSeconds = Math.round(tooltipItem.yLabel * 3600);
+                                let hours = Math.floor(totalSeconds / 3600);
+                                let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+                                let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+
+                                // Format the string
+                                label += hours + 'h' + (minutes < 10 ? "0" : "") + minutes + "'" + (seconds < 10 ? "0" : "") + seconds + '"';
+                                return label;
                             }
-
-                            // Convert decimal hours to hours, minutes, and seconds
-                            let totalSeconds = Math.round(tooltipItem.yLabel * 3600);
-                            let hours = Math.floor(totalSeconds / 3600);
-                            let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
-                            let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
-
-                            // Format the string
-                            label += hours + 'h' + (minutes < 10 ? "0" : "") + minutes + "'" + (seconds < 10 ? "0" : "") + seconds + '"';
-                            return label;
                         }
                     }
                 }
