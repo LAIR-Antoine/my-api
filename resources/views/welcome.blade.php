@@ -954,6 +954,25 @@
                             }
                         }
                     }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                        label: function(context) {
+                                let datasetLabel = context.dataset.label || '';
+                                let value = context.raw;
+                                let hours = Math.floor(value);
+                                let minutes = Math.floor((value - hours) * 60);
+                                let seconds = Math.round(((value - hours) * 60 - minutes) * 60);
+
+                                // Ensuring two digits for minutes and seconds
+                                minutes = ('0' + minutes).slice(-2);
+                                
+
+                                return datasetLabel + ': ' + `${hours}h${minutes}'`;
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -1006,6 +1025,25 @@
                             stepSize: 1,
                             callback: function(value) {
                                 return value + 'h';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                        label: function(context) {
+                                let datasetLabel = context.dataset.label || '';
+                                let value = context.raw;
+                                let hours = Math.floor(value);
+                                let minutes = Math.floor((value - hours) * 60);
+                                let seconds = Math.round(((value - hours) * 60 - minutes) * 60);
+
+                                // Ensuring two digits for minutes and seconds
+                                minutes = ('0' + minutes).slice(-2);
+                                
+
+                                return datasetLabel + ': ' + `${hours}h${minutes}'`;
                             }
                         }
                     }
@@ -1064,6 +1102,25 @@
                             stepSize: 2,
                             callback: function(value) {
                                 return value + 'h';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                        label: function(context) {
+                                let datasetLabel = context.dataset.label || '';
+                                let value = context.raw;
+                                let hours = Math.floor(value);
+                                let minutes = Math.floor((value - hours) * 60);
+                                let seconds = Math.round(((value - hours) * 60 - minutes) * 60);
+
+                                // Ensuring two digits for minutes and seconds
+                                minutes = ('0' + minutes).slice(-2);
+                                
+
+                                return datasetLabel + ': ' + `${hours}h${minutes}'`;
                             }
                         }
                     }
