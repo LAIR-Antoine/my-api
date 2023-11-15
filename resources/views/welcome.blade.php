@@ -904,31 +904,25 @@
     </div>
     <div class="chartLine">
         <div>
-            <h2>2022</h2>
             <canvas id="sportTimeChart4" width="400" height="200"></canvas>
         </div>
         <div>
-            <h2>2023</h2>
             <canvas id="sportTimeChart5" width="400" height="200"></canvas>
         </div>
     </div>
     <div class="chartLine">
         <div>
-            <h2>2022</h2>
             <canvas id="sportTimeChart6" width="400" height="200"></canvas>
         </div>
         <div>
-            <h2>2023</h2>
             <canvas id="sportTimeChart7" width="400" height="200"></canvas>
         </div>
     </div>
     <div class="chartLine">
         <div>
-            <h2>2022</h2>
             <canvas id="sportTimeChart8" width="400" height="200"></canvas>
         </div>
         <div>
-            <h2>2023</h2>
             <canvas id="sportTimeChart9" width="400" height="200"></canvas>
         </div>
     </div>
@@ -1170,7 +1164,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Natation',
+                        label: 'Natation - 2022',
                         data: swimLastYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1191,7 +1185,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: swimMax
+                        max: swimMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
@@ -1204,7 +1203,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Natation',
+                        label: 'Natation - 2023',
                         data: swimThisYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1225,7 +1224,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: swimMax
+                        max: swimMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
@@ -1243,7 +1247,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Vélo',
+                        label: 'Vélo - 2022',
                         data: bikeLastYear,
                         backgroundColor: 'rgba(100, 217, 208, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1264,7 +1268,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: bikeMax
+                        max: bikeMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
@@ -1277,7 +1286,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Vélo',
+                        label: 'Vélo - 2023',
                         data: bikeThisYear,
                         backgroundColor: 'rgba(100, 217, 208, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1298,7 +1307,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: bikeMax
+                        max: bikeMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
@@ -1316,7 +1330,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Course',
+                        label: 'Course - 2022',
                         data: runLastYear,
                         backgroundColor: 'rgba(255, 196, 0, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1337,7 +1351,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: runMax
+                        max: runMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
@@ -1352,7 +1371,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Course',
+                        label: 'Course - 2023',
                         data: runThisYear,
                         backgroundColor: 'rgba(255, 196, 0, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1373,7 +1392,12 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
-                        max: runMax
+                        max: runMax,
+                        ticks: {    
+                            callback: function(value) {
+                                return value + ' km';
+                            }
+                        }
                     }
                 }
             }
