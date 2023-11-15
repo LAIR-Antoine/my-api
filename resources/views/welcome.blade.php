@@ -902,7 +902,6 @@
             <canvas id="sportTimeChart3" width="400" height="200"></canvas>
         </div>
     </div>
-    <h2>Natation</h2>
     <div class="chartLine">
         <div>
             <h2>2022</h2>
@@ -913,7 +912,6 @@
             <canvas id="sportTimeChart5" width="400" height="200"></canvas>
         </div>
     </div>
-    <h2>Vélo</h2>
     <div class="chartLine">
         <div>
             <h2>2022</h2>
@@ -924,7 +922,6 @@
             <canvas id="sportTimeChart7" width="400" height="200"></canvas>
         </div>
     </div>
-    <h2>Course à pied</h2>
     <div class="chartLine">
         <div>
             <h2>2022</h2>
