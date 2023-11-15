@@ -172,7 +172,72 @@ class DistanceGoalController extends Controller
 
         $fiveLastWeeks = $this->getFiveLastWeeksForChart();
 
-        return view('welcome', compact('activeGoals', 'currentWeekActivities', 'pastWeekActivities', 'fiveLastWeeks'));
+        $swimLastYear = $this->getYearDistancePerMonthPerSport('2022', 'Swim');
+
+        return view('welcome', compact('activeGoals', 'currentWeekActivities', 'pastWeekActivities', 'fiveLastWeeks', 'swimLastYear'));
+    }
+
+    public function getYearDistancePerMonthPerSport($year, $sport)
+    {        
+        $activities = Activities::where('start_date_local', '>=', $year . '-01-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
+            ->where('type', 'LIKE', '%'.$sport.'%')
+            ->get();
+    
+        $yearDistancePerMonth = array();
+        for ($i = 1; $i <= 12; $i++) {
+            $yearDistancePerMonth[$i] = 0;
+        }
+
+        $yearDistancePerMonth[1] = $activities->where('start_date_local', '>=', $year . '-01-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-01-31 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[2] = $activities->where('start_date_local', '>=', $year . '-02-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-02-29 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[3] = $activities->where('start_date_local', '>=', $year . '-03-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-03-31 23:59:59')
+            ->sum('distance');
+        
+        $yearDistancePerMonth[4] = $activities->where('start_date_local', '>=', $year . '-04-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-04-30 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[5] = $activities->where('start_date_local', '>=', $year . '-05-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-05-31 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[6] = $activities->where('start_date_local', '>=', $year . '-06-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-06-30 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[7] = $activities->where('start_date_local', '>=', $year . '-07-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-07-31 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[8] = $activities->where('start_date_local', '>=', $year . '-08-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-08-31 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[9] = $activities->where('start_date_local', '>=', $year . '-09-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-09-30 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[10] = $activities->where('start_date_local', '>=', $year . '-10-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-10-31 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[11] = $activities->where('start_date_local', '>=', $year . '-11-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-11-30 23:59:59')
+            ->sum('distance');
+
+        $yearDistancePerMonth[12] = $activities->where('start_date_local', '>=', $year . '-12-01 00:00:00')
+            ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
+            ->sum('distance');
+
+        return $yearDistancePerMonth;       
     }
 
     public function getFiveLastWeeksForChart() {

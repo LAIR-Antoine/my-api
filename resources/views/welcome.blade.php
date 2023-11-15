@@ -902,6 +902,12 @@
             <canvas id="sportTimeChart3" width="400" height="200"></canvas>
         </div>
     </div>
+    <div class="chartLine">
+        <div>
+            <h2>2022 - Natation</h2>
+            <canvas id="sportTimeChart4" width="400" height="200"></canvas>
+        </div>
+    </div>
     <script>
         var daysOfWeek = @json($pastWeekActivities['dates']);
         var swim = @json($pastWeekActivities[0]);
@@ -1123,6 +1129,42 @@
                                 return datasetLabel + ': ' + `${hours}h${minutes}'`;
                             }
                         }
+                    }
+                }
+            }
+        });
+
+        var monthOfYear = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        var swimLastYear = @json($swimLastYear);
+
+        var ctx4 = document.getElementById('sportTimeChart4').getContext('2d');
+        var chart4 = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: monthOfYear,
+                datasets: [{
+                        barThickness: 30,
+                        label: 'Natation',
+                        data: swimLastYear,
+                        backgroundColor: 'rgba(69, 148, 209, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
                     }
                 }
             }
