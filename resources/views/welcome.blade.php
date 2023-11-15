@@ -1323,14 +1323,10 @@
 
         console.log(runLastYear, runThisYear);
 
-        // Assuming runLastYear and runThisYear are provided as JSON strings
-        var runLastYearArray = JSON.parse(runLastYear);
-        var runThisYearArray = JSON.parse(runThisYear);
-
         // Check if they are arrays and have values
-        if(Array.isArray(runLastYearArray) && Array.isArray(runThisYearArray)) {
-            var maxRunLastYear = Math.max(...runLastYearArray);
-            var maxRunThisYear = Math.max(...runThisYearArray);
+        if(Array.isArray(runLastYear) && Array.isArray(runThisYear)) {
+            var maxRunLastYear = Math.max(...runLastYear);
+            var maxRunThisYear = Math.max(...runThisYear);
             var overallRunMax = Math.max(maxRunLastYear, maxRunThisYear);
             var runMax = Math.ceil(overallRunMax / 50) * 50;
         } else {
