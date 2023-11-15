@@ -1161,8 +1161,10 @@
             }
         });
 
-        var monthOfYear = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        // var monthOfYear = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
         var swimLastYear = @json($swimLastYear);
+        var swimThisYear = @json($swimThisYear);
+        var swimMax = 20;
 
         var ctx4 = document.getElementById('sportTimeChart4').getContext('2d');
         var chart4 = new Chart(ctx4, {
@@ -1192,12 +1194,11 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: swimMax
                     }
                 }
             }
         });
-
-        var swimThisYear = @json($swimThisYear);
 
         var ctx5 = document.getElementById('sportTimeChart5').getContext('2d');
         var chart5 = new Chart(ctx5, {
@@ -1227,12 +1228,16 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: swimMax
                     }
                 }
             }
         });
 
         var bikeLastYear = @json($bikeLastYear);
+        var bikeThisYear = @json($bikeThisYear);
+
+        var bikeMax = 800;
 
         var ctx6 = document.getElementById('sportTimeChart6').getContext('2d');
         var chart6 = new Chart(ctx6, {
@@ -1262,12 +1267,11 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: bikeMax
                     }
                 }
             }
         });
-
-        var bikeThisYear = @json($bikeThisYear);
 
         var ctx7 = document.getElementById('sportTimeChart7').getContext('2d');
         var chart7 = new Chart(ctx7, {
@@ -1297,12 +1301,16 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: bikeMax
                     }
                 }
             }
         });
 
         var runLastYear = @json($runLastYear);
+        var runThisYear = @json($runThisYear);
+
+        var runMax = 200;
 
         var ctx8 = document.getElementById('sportTimeChart8').getContext('2d');
         var chart8 = new Chart(ctx8, {
@@ -1332,12 +1340,13 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: runMax
                     }
                 }
             }
         });
 
-        var runThisYear = @json($runThisYear);
+        
 
         var ctx9 = document.getElementById('sportTimeChart9').getContext('2d');
         var chart9 = new Chart(ctx9, {
@@ -1367,6 +1376,7 @@
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: runMax
                     }
                 }
             }
