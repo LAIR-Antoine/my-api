@@ -188,51 +188,51 @@ class DistanceGoalController extends Controller
 
         $yearDistancePerMonth[1] = $activities->where('start_date_local', '>=', $year . '-01-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-01-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[2] = $activities->where('start_date_local', '>=', $year . '-02-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-02-29 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[3] = $activities->where('start_date_local', '>=', $year . '-03-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-03-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
         
         $yearDistancePerMonth[4] = $activities->where('start_date_local', '>=', $year . '-04-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-04-30 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[5] = $activities->where('start_date_local', '>=', $year . '-05-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-05-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[6] = $activities->where('start_date_local', '>=', $year . '-06-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-06-30 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[7] = $activities->where('start_date_local', '>=', $year . '-07-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-07-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[8] = $activities->where('start_date_local', '>=', $year . '-08-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-08-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[9] = $activities->where('start_date_local', '>=', $year . '-09-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-09-30 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[10] = $activities->where('start_date_local', '>=', $year . '-10-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-10-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[11] = $activities->where('start_date_local', '>=', $year . '-11-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-11-30 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         $yearDistancePerMonth[12] = $activities->where('start_date_local', '>=', $year . '-12-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
-            ->sum('distance');
+            ->sum('distance') /1000;
 
         return $yearDistancePerMonth;       
     }

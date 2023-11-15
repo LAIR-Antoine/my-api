@@ -1143,7 +1143,7 @@
             data: {
                 //labels: monthOfYear,
                 datasets: [{
-                        barThickness: 30,
+                        barThickness: 20,
                         label: 'Natation',
                         data: swimLastYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
