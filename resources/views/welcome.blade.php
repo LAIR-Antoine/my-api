@@ -1162,7 +1162,7 @@
         var maxSwimLastYear = Math.max(...swimLastYearValues);
         var maxSwimThisYear = Math.max(...swimThisYearValues);
         var overallSwimMax = Math.max(maxSwimLastYear, maxSwimThisYear);
-        var swimMax = Math.ceil(overallSwimMax / 50) * 50;
+        var swimMax = Math.ceil(overallSwimMax / 5) * 5;
 
         var ctx4 = document.getElementById('sportTimeChart4').getContext('2d');
         var chart4 = new Chart(ctx4, {
@@ -1251,7 +1251,7 @@
         var maxBikeLastYear = Math.max(...bikeLastYearValues);
         var maxBikeThisYear = Math.max(...bikeThisYearValues);
         var overallBikeMax = Math.max(maxBikeLastYear, maxBikeThisYear);
-        var bikeMax = Math.ceil(overallBikeMax / 50) * 50;
+        var bikeMax = Math.ceil(overallBikeMax / 100) * 100;
 
         var ctx6 = document.getElementById('sportTimeChart6').getContext('2d');
         var chart6 = new Chart(ctx6, {
