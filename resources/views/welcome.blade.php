@@ -1321,7 +1321,10 @@
         var runLastYear = @json($runLastYear);
         var runThisYear = @json($runThisYear);
 
-        var runMax = 200;
+        var maxRunLastYear = Math.max(...runLastYear);
+        var maxRunThisYear = Math.max(...runThisYear);
+        var overallRunMax = Math.max(maxRunLastYear, maxRunThisYear);
+        var runMax = Math.ceil(overallRunMax / 50) * 50;
 
         var ctx8 = document.getElementById('sportTimeChart8').getContext('2d');
         var chart8 = new Chart(ctx8, {
