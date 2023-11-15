@@ -1141,7 +1141,7 @@
         var chart4 = new Chart(ctx4, {
             type: 'bar',
             data: {
-                labels: monthOfYear,
+                //labels: monthOfYear,
                 datasets: [{
                         barThickness: 30,
                         label: 'Natation',
