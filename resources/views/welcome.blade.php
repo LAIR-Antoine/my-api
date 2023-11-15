@@ -1267,7 +1267,14 @@
 
         #sportTimeChart,
         #sportTimeChart2,
-        #sportTimeChart3 {
+        #sportTimeChart3,
+        #sportTimeChart4,
+        #sportTimeChart5,
+        #sportTimeChart6,
+        #sportTimeChart7,
+        #sportTimeChart8,
+        #sportTimeChart9
+         {
 
             max-width: 350px;
             max-height: 175px;

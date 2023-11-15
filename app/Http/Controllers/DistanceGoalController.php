@@ -185,9 +185,6 @@ class DistanceGoalController extends Controller
             ->get();
     
         $yearDistancePerMonth = array();
-        for ($i = 1; $i <= 12; $i++) {
-            $yearDistancePerMonth[$i] = 0;
-        }
 
         $yearDistancePerMonth[1] = $activities->where('start_date_local', '>=', $year . '-01-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-01-31 23:59:59')
