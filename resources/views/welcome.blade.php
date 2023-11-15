@@ -902,10 +902,37 @@
             <canvas id="sportTimeChart3" width="400" height="200"></canvas>
         </div>
     </div>
+    <h2>Natation</h2>
     <div class="chartLine">
         <div>
-            <h2>2022 - Natation</h2>
+            <h2>2022</h2>
             <canvas id="sportTimeChart4" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <h2>2023</h2>
+            <canvas id="sportTimeChart5" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <h2>Vélo</h2>
+    <div class="chartLine">
+        <div>
+            <h2>2022</h2>
+            <canvas id="sportTimeChart6" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <h2>2023</h2>
+            <canvas id="sportTimeChart7" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <h2>Course à pied</h2>
+    <div class="chartLine">
+        <div>
+            <h2>2022</h2>
+            <canvas id="sportTimeChart8" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <h2>2023</h2>
+            <canvas id="sportTimeChart9" width="400" height="200"></canvas>
         </div>
     </div>
     <script>
@@ -1147,6 +1174,181 @@
                         label: 'Natation',
                         data: swimLastYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+
+        var swimThisYear = @json($swimThisYear);
+
+        var ctx5 = document.getElementById('sportTimeChart5').getContext('2d');
+        var chart5 = new Chart(ctx5, {
+            type: 'bar',
+            data: {
+                //labels: monthOfYear,
+                datasets: [{
+                        barThickness: 20,
+                        label: 'Natation',
+                        data: swimThisYear,
+                        backgroundColor: 'rgba(69, 148, 209, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+
+        var bikeLastYear = @json($bikeLastYear);
+
+        var ctx6 = document.getElementById('sportTimeChart6').getContext('2d');
+        var chart6 = new Chart(ctx6, {
+            type: 'bar',
+            data: {
+                //labels: monthOfYear,
+                datasets: [{
+                        barThickness: 20,
+                        label: 'Vélo',
+                        data: bikeLastYear,
+                        backgroundColor: 'rgba(100, 217, 208, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+
+        var bikeThisYear = @json($bikeThisYear);
+
+        var ctx7 = document.getElementById('sportTimeChart7').getContext('2d');
+        var chart7 = new Chart(ctx7, {
+            type: 'bar',
+            data: {
+                //labels: monthOfYear,
+                datasets: [{
+                        barThickness: 20,
+                        label: 'Vélo',
+                        data: bikeThisYear,
+                        backgroundColor: 'rgba(100, 217, 208, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+
+        var runLastYear = @json($runLastYear);
+
+        var ctx8 = document.getElementById('sportTimeChart8').getContext('2d');
+        var chart8 = new Chart(ctx8, {
+            type: 'bar',
+            data: {
+                //labels: monthOfYear,
+                datasets: [{
+                        barThickness: 20,
+                        label: 'Course',
+                        data: runLastYear,
+                        backgroundColor: 'rgba(255, 196, 0, 1)',
+                        stack: 'stack1' // Assign a stack name for Sport 1
+
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false, // Prevent automatic label skipping
+                            maxRotation: 0, // Rotate labels to 0 degrees (horizontal)
+                            minRotation: 0 // Rotate labels to 0 degrees (horizontal)
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+
+        var runThisYear = @json($runThisYear);
+
+        var ctx9 = document.getElementById('sportTimeChart9').getContext('2d');
+        var chart9 = new Chart(ctx9, {
+            type: 'bar',
+            data: {
+                //labels: monthOfYear,
+                datasets: [{
+                        barThickness: 20,
+                        label: 'Course',
+                        data: runThisYear,
+                        backgroundColor: 'rgba(255, 196, 0, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
 
                     }
