@@ -1155,7 +1155,14 @@
         // var monthOfYear = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
         var swimLastYear = @json($swimLastYear);
         var swimThisYear = @json($swimThisYear);
-        var swimMax = 20;
+        
+        var swimLastYearValues = Object.values(swimLastYear);
+        var swimThisYearValues = Object.values(swimThisYear);
+
+        var maxSwimLastYear = Math.max(...swimLastYearValues);
+        var maxSwimThisYear = Math.max(...swimThisYearValues);
+        var overallSwimMax = Math.max(maxSwimLastYear, maxSwimThisYear);
+        var swimMax = Math.ceil(overallSwimMax / 50) * 50;
 
         var ctx4 = document.getElementById('sportTimeChart4').getContext('2d');
         var chart4 = new Chart(ctx4, {
@@ -1238,7 +1245,13 @@
         var bikeLastYear = @json($bikeLastYear);
         var bikeThisYear = @json($bikeThisYear);
 
-        var bikeMax = 800;
+        var bikeLastYearValues = Object.values(bikeLastYear);
+        var bikeThisYearValues = Object.values(bikeThisYear);
+
+        var maxBikeLastYear = Math.max(...bikeLastYearValues);
+        var maxBikeThisYear = Math.max(...bikeThisYearValues);
+        var overallBikeMax = Math.max(maxBikeLastYear, maxBikeThisYear);
+        var bikeMax = Math.ceil(overallBikeMax / 50) * 50;
 
         var ctx6 = document.getElementById('sportTimeChart6').getContext('2d');
         var chart6 = new Chart(ctx6, {
