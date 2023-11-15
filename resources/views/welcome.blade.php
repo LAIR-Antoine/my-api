@@ -1492,6 +1492,11 @@
             max-height: 175px;
             margin: 10px auto 30px auto; 
         }
+        h2 {
+            font-family: sans-serif;
+            text-align: center;
+            color: rgba(0, 0, 128, 1);
+        }
 
 /*         * {
             font-family: sans-serif;
