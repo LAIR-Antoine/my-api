@@ -241,6 +241,12 @@ class DistanceGoalController extends Controller
             ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
             ->sum('distance') /1000 , 1);
 
+        foreach ($yearDistancePerMonth as $key => $value) {
+            if ($value == null) {
+                $yearDistancePerMonth[$key] = 0;
+            }
+        }
+
         return $yearDistancePerMonth;       
     }
 
