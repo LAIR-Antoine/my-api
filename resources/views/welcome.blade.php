@@ -1321,10 +1321,21 @@
         var runLastYear = @json($runLastYear);
         var runThisYear = @json($runThisYear);
 
-        var maxRunLastYear = Math.max(...runLastYear);
-        var maxRunThisYear = Math.max(...runThisYear);
-        var overallRunMax = Math.max(maxRunLastYear, maxRunThisYear);
-        var runMax = Math.ceil(overallRunMax / 50) * 50;
+        console.log(runLastYear, runThisYear);
+
+        // Assuming runLastYear and runThisYear are provided as JSON strings
+        var runLastYearArray = JSON.parse(runLastYear);
+        var runThisYearArray = JSON.parse(runThisYear);
+
+        // Check if they are arrays and have values
+        if(Array.isArray(runLastYearArray) && Array.isArray(runThisYearArray)) {
+            var maxRunLastYear = Math.max(...runLastYearArray);
+            var maxRunThisYear = Math.max(...runThisYearArray);
+            var overallRunMax = Math.max(maxRunLastYear, maxRunThisYear);
+            var runMax = Math.ceil(overallRunMax / 50) * 50;
+        } else {
+            console.error("runLastYear or runThisYear is not an array");
+        }
 
         var ctx8 = document.getElementById('sportTimeChart8').getContext('2d');
         var chart8 = new Chart(ctx8, {
