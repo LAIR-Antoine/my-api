@@ -932,6 +932,25 @@
         var bike = @json($pastWeekActivities[1]);
         var run = @json($pastWeekActivities[2]);
 
+        var sumPerDay = [];
+        for (let i = 0; i < swim.length; i++) {
+            sumPerDay.push(swim[i] + bike[i] + run[i]);
+        }
+        var maxDayLast = Math.round(Math.max(...sumPerDay));     
+        
+        var daysOfWeekActual = @json($currentWeekActivities['dates']);
+        var swimActual = @json($currentWeekActivities[0]);
+        var bikeActual = @json($currentWeekActivities[1]);
+        var runActual = @json($currentWeekActivities[2]);
+
+        var sumPerDayActual = [];
+        for (let i = 0; i < swimActual.length; i++) {
+            sumPerDayActual.push(swimActual[i] + bikeActual[i] + runActual[i]);
+        }
+        var maxDayActual = Math.round(Math.max(...sumPerDayActual));
+
+        var maxDay = Math.max(maxDayLast, maxDayActual);
+
         var ctx = document.getElementById('sportTimeChart').getContext('2d');
         var chart = new Chart(ctx, {
             type: 'bar',
@@ -969,7 +988,7 @@
                     },
                     y: {
                         stacked: true,
-                        max: 3,
+                        max: maxDay,
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1,
@@ -1001,10 +1020,7 @@
             }
         });
 
-        var daysOfWeekActual = @json($currentWeekActivities['dates']);
-        var swimActual = @json($currentWeekActivities[0]);
-        var bikeActual = @json($currentWeekActivities[1]);
-        var runActual = @json($currentWeekActivities[2]);
+
 
         var ctx2 = document.getElementById('sportTimeChart2').getContext('2d');
         var chart2 = new Chart(ctx2, {
@@ -1043,7 +1059,7 @@
                     },
                     y: {
                         stacked: true,
-                        max: 3,
+                        max: maxDay,
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1,
