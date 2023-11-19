@@ -936,8 +936,7 @@
         for (let i = 0; i < swim.length; i++) {
             sumPerDay.push(swim[i] + bike[i] + run[i]);
         }
-        console.log(sumPerDay);
-        var maxDayLast = Math.round(Math.max(...sumPerDay));    
+        var maxDayLast = Math.ceil(Math.max(...sumPerDay));    
 
         
         var daysOfWeekActual = @json($currentWeekActivities['dates']);
@@ -949,12 +948,10 @@
         for (let i = 0; i < swimActual.length; i++) {
             sumPerDayActual.push(swimActual[i] + bikeActual[i] + runActual[i]);
         }
-        console.log(sumPerDayActual);
-        var maxDayActual = Math.round(Math.max(...sumPerDayActual));
+        var maxDayActual = Math.ceil(Math.max(...sumPerDayActual));
 
         var maxDay = Math.max(maxDayLast, maxDayActual);
 
-        console.log(maxDay);
 
         var ctx = document.getElementById('sportTimeChart').getContext('2d');
         var chart = new Chart(ctx, {
