@@ -13,8 +13,6 @@ class StravaController extends Controller
 {
     public function dashboard(Request $request)
     {
-        
-
         $user = User::find(auth()->id());
         $activities = Activities::orderBy('start_date_local', 'desc')->paginate(15);
 
@@ -42,6 +40,7 @@ class StravaController extends Controller
         $user = User::find(auth()->id());
         $user->strava_access_token = $token->access_token;
         $user->strava_refresh_token = $token->refresh_token;
+        $user->token_expires_at = now()->addSeconds($token->expires_in);
         $user->save();
 
         return redirect()->route('dashboard');
@@ -61,6 +60,7 @@ class StravaController extends Controller
 
     private function refreshToken($user)
     {
+        //dd($user);
         try {
             // Use Strava's token refresh endpoint to get a new token
             $response = Strava::refreshToken($user->strava_refresh_token);
@@ -129,7 +129,7 @@ class StravaController extends Controller
     {
         $user = User::find(auth()->id());
         $this->refreshTokenIfNeeded($user);
-        
+
         $page = 1;
 
        
