@@ -50,9 +50,38 @@ class StravaController extends Controller
         // Store $token->access_token & $token->refresh_token in database
     }
 
+    public function refreshTokenIfNeeded($user)
+    {
+        // Check if the current time is past the token's expiry time
+        if (now()->greaterThan($user->token_expires_at)) {
+            // Refresh the token
+            $this->refreshToken($user);
+        }
+    }
+
+    private function refreshToken($user)
+    {
+        try {
+            // Use Strava's token refresh endpoint to get a new token
+            $response = Strava::refreshToken($user->strava_refresh_token);
+
+            // Update user's tokens and expiry time in the database
+            $user->update([
+                'strava_access_token' => $response->access_token,
+                'strava_refresh_token' => $response->refresh_token,
+                'token_expires_at' => now()->addSeconds($response->expires_in),
+            ]);
+        } catch (\Exception $e) {
+            // Handle exceptions, e.g., logging
+            Log::error("Error refreshing Strava token: " . $e->getMessage());
+        }
+    }
+
     public function syncAllActivities() 
     {
         $user = User::find(auth()->id());
+
+        $this->refreshTokenIfNeeded($user);
         $allSynced = false;
         $page = 1;
 
@@ -99,6 +128,8 @@ class StravaController extends Controller
     public function syncActivities() 
     {
         $user = User::find(auth()->id());
+        $this->refreshTokenIfNeeded($user);
+        
         $page = 1;
 
        
