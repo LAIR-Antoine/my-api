@@ -386,4 +386,56 @@ class DistanceGoalController extends Controller
 
         return $fiveLastWeeks;
     }
+
+    public function getWeekStat($year, $week) {
+        $WeekStart = Carbon::now()->setISODate($year, $week)->startOfWeek();
+        $WeekEnd = Carbon::now()->setISODate($year, $week)->endOfWeek();
+
+        $WeekDates = [];
+
+        for ($date = $WeekStart; $date <= $WeekEnd; $date->addDay()) {
+            $WeekDates[] = $date->toDateString();
+        }
+
+        $weekStat = [];
+        
+
+        $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+
+        foreach ($WeekDates as $index => $date) {
+
+            $day = date('d', strtotime($date));
+            $month = date('m', strtotime($date));
+            $weekStat['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
+
+            $weekStatDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')->where('start_date_local', '<=', $date . ' 23:59:59')->get();
+            foreach ($weekStatDB as $activity) {
+                if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
+                    $weekStat[1][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Run') {
+                    $weekStat[2][$index] = $activity->moving_time / 3600;
+                } else if ($activity->type == 'Swim') {
+                    $weekStat[0][$index] = $activity->moving_time / 3600;
+                }
+            }
+            if (!isset($weekStat[0][$index])) {
+                $weekStat[0][$index] = 0;
+            }
+            if (!isset($weekStat[1][$index])) {
+                $weekStat[1][$index] = 0;
+            }
+            if (!isset($weekStat[2][$index])) {
+                $weekStat[2][$index] = 0;
+            }
+        }
+        //dd($weekStat);
+        return $weekStat;
+    }
+
+    public function weekStat(Request $request) {
+        $weekStat = $this->getWeekStat($request->year, $request->week);
+        $url = ['year' => $request->year, 'week' => $request->week];
+
+        return view('weekGraph', compact('weekStat', 'url'));
+    }
 }

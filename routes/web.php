@@ -28,6 +28,8 @@ Route::get('/strava/sync/all', [StravaController::class, 'syncAllActivities'])->
 Route::get('/stats', [StatsController::class, 'index'])->middleware(['auth', 'verified'])->name('stats');
 Route::get('/stats/{year}', [StatsController::class, 'monthStats'])->middleware(['auth', 'verified'])->name('stats.months');
 
+Route::get('/stats/{year}/{week}', [DistanceGoalController::class, 'weekStat'])->middleware(['auth', 'verified'])->name('stats.weeks');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
