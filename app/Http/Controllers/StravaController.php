@@ -20,7 +20,7 @@ class StravaController extends Controller
             $this->getToken($request);
         }
 
-        return view('dashboard', compact('activities'));
+        return view('dashboard', compact('activities', 'user'));
     }
 
     public function stravaAuth()
@@ -164,7 +164,6 @@ class StravaController extends Controller
 
             $goal->distance_done = 0;
             foreach ($activities as $activity) {
-                //$goal->distance_done += $activity->distance;
                 if (($activity->type == 'Ride' || $activity->type == 'VirtualRide') && $goal->sport == 'bike') {
                     $goal->distance_done += $activity->distance;
                 } else if (($activity->type == 'Run') && $goal->sport == 'run') {
@@ -175,7 +174,6 @@ class StravaController extends Controller
             }
             $goal->distance_done = $goal->distance_done / 1000;
             $goal->save();
-            //dd($activities);
         }
 
         return redirect()->route('welcome');

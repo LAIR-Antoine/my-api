@@ -9,12 +9,23 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <a class="button strava-button" href={{ route('strava.auth') }}>Se connecter à Strava</a> 
-                    <br><br>
-                    <a class="button blue-button" href={{ route('welcome') }}>Vue classique</a>
-                    <br><br>
-                     <a class="button strava-button" href={{ route('strava.sync') }}>Synchroniser les activitiés Strava</a> 
-                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const queryString = window.location.search;
+                            const urlParams = new URLSearchParams(queryString);
+                            const state = urlParams.get('state');
+                            if (state == 'strava') {
+                                window.location.href = "/dashboard";
+                            }
+                        });
+                    </script>
+                    @if (!$user->strava_access_token)
+                        <a class="button strava-button" href={{ route('strava.auth') }}>Se connecter à Strava</a> 
+                        <br>
+                    @else
+                        <a class="button strava-button" href={{ route('strava.sync') }}>Synchroniser les activitiés Strava</a> 
+                        <br>
+                    @endif
 
                     <br><br>
                     <table>
@@ -41,7 +52,6 @@
                                     }
                                     
                                     $time = ($hours != 0 ? $hours . 'h' : null) . $minutes . '\'' . $seconds . '"';
-                                    //$time 
                                 @endphp
                                 <tr>
                                     <td>{{ date("d/m/Y", strtotime($activity->start_date_local)) }}</td>
