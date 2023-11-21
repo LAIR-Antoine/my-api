@@ -11,8 +11,8 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="centered-buttons">
-                        <a class="button blue-button" href={{ route('stats.weeks', ['year' => $url['year'], 'week' => $url['week']-1]) }}>Semaine précédente</a> 
-                        <a class="button blue-button" href={{ route('stats.weeks', ['year' => $url['year'], 'week' => $url['week']+1]) }}>Semaine suivante</a> 
+                        <a class="button blue-button" href={{ route('stats.weeks', ['year' => $url['year'], 'week' => $url['week']-1]) }}>S {{ $url['week']-1 }}</a> 
+                        <a class="button blue-button" href={{ route('stats.weeks', ['year' => $url['year'], 'week' => $url['week']+1]) }}>S {{ $url['week']+1 }}</a> 
                     </div>
                     <br />
                     <div class="chartLine">
