@@ -34,8 +34,6 @@ class StravaController extends Controller
 
     public function getToken(Request $request)
     {
-        //dd($request->code);
-        //dd(auth()->id());
         $token = Strava::token($request->code);
         $user = User::find(auth()->id());
         $user->strava_access_token = $token->access_token;
@@ -44,39 +42,26 @@ class StravaController extends Controller
         $user->save();
 
         return redirect()->route('dashboard');
-
-        //dd($token);
-        // Store $token->access_token & $token->refresh_token in database
     }
 
     public function refreshTokenIfNeeded($user)
     {
-        //dd($user->token_expires_at, now(), now()->greaterThan($user->token_expires_at));
-
-        // Check if the current time is past the token's expiry time
         if (now()->greaterThan($user->token_expires_at)) {
-            // Refresh the token
             $this->refreshToken($user);
         }
     }
 
     private function refreshToken($user)
     {
-        //dd($user);
         try {
-            // Use Strava's token refresh endpoint to get a new token
             $response = Strava::refreshToken($user->strava_refresh_token);
-            //dd($response);
-            // Update user's tokens and expiry time in the database
             $user->update([
                 'strava_access_token' => $response->access_token,
                 'strava_refresh_token' => $response->refresh_token,
                 'token_expires_at' => now()->addSeconds($response->expires_in)
             ]);
             $user->save();
-            //dd($user);
         } catch (\Exception $e) {
-            // Handle exceptions, e.g., logging
             Log::error("Error refreshing Strava token: " . $e->getMessage());
         }
     }
@@ -95,11 +80,12 @@ class StravaController extends Controller
             if (count($activities) == 0) {
                 $allSynced = true;
             }
-            //dd($activities);
             foreach ($activities as $activity) {
                 $activityExist = Activities::where('strava_id', $activity->id)->first();
                 if ($activityExist) {
-    
+                    $activitiyToUpdate = Activities::where('strava_id', $activity->id)->first();
+                    $activitiyToUpdate->name = $activity->name;
+                    $activitiyToUpdate->save();
                 } else {
                     $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null); 
                     $activitiyToCreate = Activities::create([
@@ -126,7 +112,6 @@ class StravaController extends Controller
         }
 
         return redirect()->route('dashboard');
-        
     }
 
     public function syncActivities() 
@@ -136,15 +121,14 @@ class StravaController extends Controller
 
         $page = 1;
 
-       
         $activities = Strava::activities($user->strava_access_token, $page, 20); //max 200
         
-        
-        //dd($activities);
         foreach ($activities as $activity) {
             $activityExist = Activities::where('strava_id', $activity->id)->first();
             if ($activityExist) {
-
+                $activitiyToUpdate = Activities::where('strava_id', $activity->id)->first();
+                $activitiyToUpdate->name = $activity->name;
+                $activitiyToUpdate->save();
             } else {
                 $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null); 
                 $activitiyToCreate = Activities::create([
@@ -169,7 +153,6 @@ class StravaController extends Controller
             }
         }
         
-
         return redirect()->route('dashboard');
     }
 
