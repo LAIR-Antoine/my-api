@@ -18,6 +18,30 @@
                     <div class="chartLine">
                         <canvas id="sportTimeChart" width="400" height="200"></canvas>
                     </div>
+
+                    <div class="weekReport">
+                        @php
+                            $hoursSwim = floor($weekStat['totalTimeSwim']);
+                            $minutesSwim = round(($weekStat['totalTimeSwim'] - $hoursSwim) * 60);
+
+                            $hoursBike = floor($weekStat['totalTimeBike']);
+                            $minutesBike = round(($weekStat['totalTimeBike'] - $hoursBike) * 60);
+
+                            $hoursRun = floor($weekStat['totalTimeRun']);
+                            $minutesRun = round(($weekStat['totalTimeRun'] - $hoursRun) * 60);
+
+                            $hoursTotal = floor($weekStat['totalTime']);
+                            $minutesTotal = round(($weekStat['totalTime'] - $hoursTotal) * 60);
+                        @endphp
+                        <h2>S {{ $url['week'] }} - {{$weekStat['dates'][0]}} au {{$weekStat['dates'][6]}}</h2>
+                        <p>Natation - <span class="swim">{{ str_replace('.', ',', round($weekStat['totalDistanceSwim'] /1000, 1)) }} km ({{ $hoursSwim }}h{{ str_pad($minutesSwim, 2, '0', STR_PAD_LEFT) }})</span></p>
+                        <p>Vélo - <span class="bike">{{ str_replace('.', ',', round($weekStat['totalDistanceBike'] /1000, 1)) }} km ({{ $hoursBike }}h{{ str_pad($minutesBike, 2, '0', STR_PAD_LEFT) }})</span></p>
+                        <p>Course - <span class="run">{{ str_replace('.', ',', round($weekStat['totalDistanceRun'] /1000, 1)) }} km ({{ $hoursRun }}h{{ str_pad($minutesRun, 2, '0', STR_PAD_LEFT) }})</span></p>
+                        <h2>{{ $hoursTotal }}h{{ str_pad($minutesTotal, 2, '0', STR_PAD_LEFT) }}</h2>
+                    </div>
+
+
+
                     <script>
                         var daysOfWeek = @json($weekStat['dates']);
                         var swim = @json($weekStat[0]);
@@ -129,5 +153,28 @@
     }
     .centered-buttons {
         text-align: center;
+    }
+    .weekReport {
+        text-align: center;
+        color: gray; 
+    }
+    .weekReport h2 {
+        font-size: 1.5em;
+
+    }
+
+    .weekReport span {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .weekReport .swim {
+        color: rgba(69, 148, 209, 1);
+    }
+    .weekReport .bike {
+        color: rgba(100, 217, 208, 1);
+    }
+    .weekReport .run {
+        color: rgba(255, 196, 0, 1);
     }
 </style>

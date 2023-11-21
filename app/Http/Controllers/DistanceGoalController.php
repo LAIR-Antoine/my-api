@@ -398,6 +398,9 @@ class DistanceGoalController extends Controller
         }
 
         $weekStat = [];
+        $weekStat['totalDistanceSwim'] = 0;
+        $weekStat['totalDistanceBike'] = 0;
+        $weekStat['totalDistanceRun'] = 0;
         
 
         $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
@@ -409,15 +412,20 @@ class DistanceGoalController extends Controller
             $weekStat['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
 
             $weekStatDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')->where('start_date_local', '<=', $date . ' 23:59:59')->get();
+
             foreach ($weekStatDB as $activity) {
                 if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                     $weekStat[1][$index] = $activity->moving_time / 3600;
+                    $weekStat['totalDistanceBike'] += $activity->distance;
                 } else if ($activity->type == 'Run') {
                     $weekStat[2][$index] = $activity->moving_time / 3600;
+                    $weekStat['totalDistanceRun'] += $activity->distance;
                 } else if ($activity->type == 'Swim') {
                     $weekStat[0][$index] = $activity->moving_time / 3600;
+                    $weekStat['totalDistanceSwim'] += $activity->distance;
                 }
             }
+
             if (!isset($weekStat[0][$index])) {
                 $weekStat[0][$index] = 0;
             }
@@ -428,6 +436,12 @@ class DistanceGoalController extends Controller
                 $weekStat[2][$index] = 0;
             }
         }
+        $weekStat['totalTimeSwim'] = array_sum($weekStat[0]);
+        $weekStat['totalTimeBike'] = array_sum($weekStat[1]);
+        $weekStat['totalTimeRun'] = array_sum($weekStat[2]);
+        $weekStat['totalTime'] = $weekStat['totalTimeSwim'] + $weekStat['totalTimeBike'] + $weekStat['totalTimeRun'];
+
+
         //dd($weekStat);
         return $weekStat;
     }
