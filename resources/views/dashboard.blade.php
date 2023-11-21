@@ -21,11 +21,14 @@
                     </script>
                     @if (!$user->strava_access_token)
                         <a class="button strava-button" href={{ route('strava.auth') }}>Se connecter à Strava</a> 
-                        <br>
+                        <br><br>
                     @else
                         <a class="button strava-button" href={{ route('strava.sync') }}>Synchroniser les activitiés Strava</a> 
-                        <br>
+                        <br><br>
                     @endif
+                    <a class="button blue-button" href={{ route('stats.weeks', ['year' => 2023, 'week' => 46]) }}>Stats semaine</a> 
+                    <br>
+
 
                     <br><br>
                     <table>
