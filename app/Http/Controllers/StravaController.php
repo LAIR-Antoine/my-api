@@ -28,7 +28,7 @@ class StravaController extends Controller
         $user->strava_access_token = null;
         $user->strava_refresh_token = null;
         $user->save();
-        return Strava::authenticate($scope='read_all,profile:read_all,activity:read_all');
+        return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all');
     }
 
     public function getToken(Request $request)
@@ -86,7 +86,12 @@ class StravaController extends Controller
                     $activitiyToUpdate->name = $activity->name;
                     $activitiyToUpdate->save();
                 } else {
-                    $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null);
+                    $city = $activity->location_city ? $activity->location_city . ', ' : null;
+                    $state = $activity->location_state ? $activity->location_state . ', ' : null;
+                    $country = $activity->location_country ? $activity->location_country : null;
+                    $location = $city . $state . $country;
+                    $elevation = $activity->total_elevation_gain ? $activity->total_elevation_gain : null;
+                    $heatrate = isset($activity->average_heartrate) ? $activity->average_heartrate : null;
                     $activitiyToCreate = Activities::create([
                         'strava_id' => $activity->id,
                         'name' => $activity->name,
@@ -96,10 +101,10 @@ class StravaController extends Controller
                         'distance' => $activity->distance ? $activity->distance : null,
                         'moving_time' => $activity->moving_time ? $activity->moving_time : null,
                         'elapsed_time' => $activity->elapsed_time ? $activity->elapsed_time : null,
-                        'total_elevation_gain' => $activity->total_elevation_gain ? $activity->total_elevation_gain : null,
+                        'total_elevation_gain' => $elevation,
                         'average_speed' => $activity->average_speed ? $activity->average_speed : null,
                         'max_speed' => $activity->max_speed ? $activity->max_speed : null,
-                        'average_heartrate' => isset($activity->average_heartrate) ? $activity->average_heartrate : null,
+                        'average_heartrate' => $heatrate,
                         'max_heartrate' => isset($activity->max_heartrate) ? $activity->max_heartrate : null,
                         'average_cadence' => isset($activity->average_cadence) ? $activity->average_cadence : null,
                         'average_watts' => isset($activity->average_watts) ? $activity->average_watts : null,
@@ -121,7 +126,7 @@ class StravaController extends Controller
         $page = 1;
 
         $activities = Strava::activities($user->strava_access_token, $page, 20); //max 200
-        
+
         foreach ($activities as $activity) {
             $activityExist = Activities::where('strava_id', $activity->id)->first();
             if ($activityExist) {
@@ -129,7 +134,10 @@ class StravaController extends Controller
                 $activitiyToUpdate->name = $activity->name;
                 $activitiyToUpdate->save();
             } else {
-                $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null);
+                $city = $activity->location_city ? $activity->location_city . ', ' : null;
+                $state = $activity->location_state ? $activity->location_state . ', ' : null;
+                $country = $activity->location_country ? $activity->location_country : null;
+                $location = $city . $state . $country;
                 $activitiyToCreate = Activities::create([
                     'strava_id' => $activity->id,
                     'name' => $activity->name,
@@ -151,7 +159,7 @@ class StravaController extends Controller
                 ]);
             }
         }
-        
+
         return redirect()->route('dashboard');
     }
 
@@ -160,7 +168,9 @@ class StravaController extends Controller
         $goals = DistanceGoal::all();
 
         foreach ($goals as $goal) {
-            $activities = Activities::where('start_date_local', '>=', $goal->begin_date)->where('start_date_local', '<=', $goal->end_date)->get();
+            $activities = Activities::where('start_date_local', '>=', $goal->begin_date)
+                ->where('start_date_local', '<=', $goal->end_date)
+                ->get();
 
             $goal->distance_done = 0;
             foreach ($activities as $activity) {

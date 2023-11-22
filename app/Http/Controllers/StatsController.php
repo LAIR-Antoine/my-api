@@ -8,8 +8,6 @@ use IntlDateFormatter;
 
 class StatsController extends Controller
 {
-    
-
     public function index()
     {
         $app = app();
@@ -28,15 +26,15 @@ class StatsController extends Controller
             $yearStats[$year]->year = $year;
             $yearStats[$year]->swim = round(Activities::where('type', 'Swim')
                 ->whereYear('start_date_local', $year)
-                ->sum('distance') /1000, 2);
+                ->sum('distance') / 1000, 2);
             $yearStats[$year]->bike = round((Activities::where('type', 'Ride')
                 ->whereYear('start_date_local', $year)
                 ->sum('distance') + Activities::where('type', 'VirtualRide')
                 ->whereYear('start_date_local', $year)
-                ->sum('distance')) /1000, 2);
+                ->sum('distance')) / 1000, 2);
             $yearStats[$year]->run = round(Activities::where('type', 'Run')
                 ->whereYear('start_date_local', $year)
-                ->sum('distance') /1000, 2);
+                ->sum('distance') / 1000, 2);
         }
 
         return view('stats', compact('yearStats'));
@@ -62,18 +60,18 @@ class StatsController extends Controller
             $monthStats[$month]->swim = round(Activities::where('type', 'Swim')
                 ->whereYear('start_date_local', $year)
                 ->whereMonth('start_date_local', $month)
-                ->sum('distance') /1000, 2);
+                ->sum('distance') / 1000, 2);
             $monthStats[$month]->bike = round((Activities::where('type', 'Ride')
                 ->whereYear('start_date_local', $year)
                 ->whereMonth('start_date_local', $month)
                 ->sum('distance') + Activities::where('type', 'VirtualRide')
                 ->whereYear('start_date_local', $year)
                 ->whereMonth('start_date_local', $month)
-                ->sum('distance')) /1000, 2);
+                ->sum('distance')) / 1000, 2);
             $monthStats[$month]->run = round(Activities::where('type', 'Run')
                 ->whereYear('start_date_local', $year)
                 ->whereMonth('start_date_local', $month)
-                ->sum('distance') /1000, 2);
+                ->sum('distance') / 1000, 2);
         }
 
         return view('monthStats', compact('monthStats', 'year'));
@@ -83,7 +81,7 @@ class StatsController extends Controller
     {
         $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
         $formatter->setPattern('MMMM');
-    
+
         return ucfirst($formatter->format(mktime(0, 0, 0, $monthNumber)));
     }
 }
