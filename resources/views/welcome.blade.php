@@ -939,10 +939,10 @@
         var maxDayLast = Math.ceil(Math.max(...sumPerDay));    
 
         
-        var daysOfWeekActual = @json($currentWeekActivities['dates']);
-        var swimActual = @json($currentWeekActivities[0]);
-        var bikeActual = @json($currentWeekActivities[1]);
-        var runActual = @json($currentWeekActivities[2]);
+        var daysOfWeekActual = @json($curWeekAct['dates']);
+        var swimActual = @json($curWeekAct[0]);
+        var bikeActual = @json($curWeekAct[1]);
+        var runActual = @json($curWeekAct[2]);
 
         var sumPerDayActual = [];
         for (let i = 0; i < swimActual.length; i++) {

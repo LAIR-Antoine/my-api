@@ -29,6 +29,24 @@
                     <a class="button blue-button" href={{ route('stats.weeks', ['year' => 2023, 'week' => 46]) }}>Stats semaine</a> 
                     <br>
 
+                    <br><br>
+                    <h2>Prochaines séances</h2>
+                    <ul class="calendarBlock">
+                        {{-- <li><p>Lundi</p></li>
+                        <li><p>Mardi</p></li>
+                        <li><p>Mercredi</p></li>
+                        <li><p>Jeudi</p></li>
+                        <li><p>Vendredi</p></li>
+                        <li><p>Samedi</p></li>
+                        <li><p>Dimanche</p></li> --}}
+                        @foreach ($calendar as $day)
+                            <li class="calendarCard {{ $day['type'] }}Card">
+                                <p>{{ $day['date'] }}</p>
+                                <p class="calendarTime">{{ $day['duration'] }}</p>
+                                <p class="calendarTitle">{{ $day['name'] }}</p>
+                            </li>
+                        @endforeach
+                    </ul>
 
                     <br><br>
                     <table>
@@ -98,4 +116,53 @@
     .sportEmote {
         font-size: 2rem;
     }
+    .SwimCard {
+        background-color: rgba(69, 148, 209, 1);
+    }
+    .RideCard {
+        background-color: rgba(100, 217, 208, 1);
+    }
+    .RunCard {
+        background-color: rgba(255, 196, 0, 1);
+    }
+    .calendarCard {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        color: black;
+        margin: 20px 10px;
+        font-weight: bold;  
+
+        display: flex;
+        flex-direction: row;
+        
+    }
+    .calendarCard p {
+        margin: 0;
+        padding: 10px 10px;
+    }
+    .calendarBlock {
+        width: fit-content;
+        margin: 0 auto;
+    }
+    h2 {
+        font-size: 1.5rem;
+        color: rgba(69, 148, 209, 1);
+        padding: 0 10px;
+        margin: 0 auto;
+        font-weight: bold;
+        text-align: center;
+    }
+/*     .calendarBlock {
+        display: flex;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+    }
+    .calendarTime {
+        font-size: 1.2rem;
+    }
+    .calendarTitle {
+        font-size: 0.8rem;
+    } */
 </style>

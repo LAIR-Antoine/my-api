@@ -7,6 +7,10 @@ use Strava;
 use App\Models\User;
 use App\Models\Activities;
 use App\Models\DistanceGoal;
+use GuzzleHttp\Client;
+use ICal\ICal;
+use Carbon\Carbon;
+use Config;
 
 class StravaController extends Controller
 {
@@ -19,7 +23,104 @@ class StravaController extends Controller
             $this->getToken($request);
         }
 
-        return view('dashboard', compact('activities', 'user'));
+        $googleCalendar = config('calendar.url');
+        $client = new Client();
+        $response = $client->get($googleCalendar);
+        $icalFile = $response->getBody()->getContents();
+        
+
+        try {
+            $ical = new ICal($icalFile, array(
+                'defaultSpan'                 => 2,     // Default value
+                'defaultTimeZone'             => 'UTC',
+                'defaultWeekStart'            => 'MO',  // Default value
+                'disableCharacterReplacement' => false, // Default value
+                'filterDaysAfter'             => null,  // Default value
+                'filterDaysBefore'            => null,  // Default value
+                'httpUserAgent'               => null,  // Default value
+                'skipRecurrence'              => false, // Default value
+            ));
+            //dd($ical);
+            $today = Carbon::today();
+
+// Get the date 10 days from today
+$tenDaysLater = $today->copy()->addDays(15);
+
+// Call the eventsFromRange method with dynamic dates
+            $actualEvents = $ical->eventsFromRange($today->toDateString(), $tenDaysLater->toDateString());
+            //dd($actualEvents);
+            $calendar = $this->extractIcsData($actualEvents);
+            
+        } catch (\Exception $e) {
+            die($e);
+        }
+
+
+        return view('dashboard', compact('activities', 'user', 'calendar'));
+    }
+
+    public function extractIcsData($events) {
+        $formattedEvents = [];
+        foreach ($events as $index => $event) {
+            $description = $event->description;
+            if (str_contains($event->summary, '[Note]') || str_contains($event->summary, '[Cycle]')) {
+                continue;
+            } else {
+                $formattedEvents[$index]['name'] = preg_replace('/[\x🏊🚴🏃♂️]/u', '', $event->summary);
+                $formattedEvents[$index]['date'] = $this->convertIcsDate($event->dtstart);
+                if (str_contains($event->summary, '🏃')) {
+                    $formattedEvents[$index]['type'] = 'Run';
+                } else if (str_contains($event->summary, '🏊')) {
+                    $formattedEvents[$index]['type'] = 'Swim';
+                } else if (str_contains($event->summary, '🚴')) {
+                    $formattedEvents[$index]['type'] = 'Ride';
+                } else {
+                    $formattedEvents[$index]['type'] = 'Other';
+                }
+
+                if (preg_match('/Durée\s*:\s*(\d{1,2}:\d{2}:\d{2})/', $description, $matches)) {
+                    $formattedEvents[$index]['duration'] = $this->convertTime($matches[1]);
+                }
+            }
+            
+
+        }
+
+        return $formattedEvents;
+    }
+
+    public function convertIcsDate($date)
+    {
+        // yyyymmdd to dd/mm/yyyy
+        $date = substr($date, 6, 2) . '/' . substr($date, 4, 2) . '/' . substr($date, 0, 4);
+
+        return $date;
+    }
+
+    public function convertTime($time) 
+    {
+        list($hours, $minutes, $seconds) = explode(':', $time);
+    
+        // Removing leading zeros
+        $hours = ltrim($hours, '0');
+        $minutes = ltrim($minutes, '0');
+        $seconds = ltrim($seconds, '0');
+    
+        // Adding default values if any part is empty
+        if (empty($hours)) $hours = '0';
+        if (empty($minutes)) $minutes = '0';
+        if (empty($seconds)) $seconds = '0';
+
+        if (strlen($minutes) == 1) $minutes = '0' . $minutes;
+        if (strlen($seconds) == 1) $seconds = '0' . $seconds;
+
+        if ($hours == 0) {
+            $total = $minutes . "'" . $seconds . "''";
+        } else {
+            $total = $hours . 'h' . $minutes . "'" . $seconds . "''";
+        }
+    
+        return $total;
     }
 
     public function stravaAuth()

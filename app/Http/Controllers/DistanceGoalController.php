@@ -38,17 +38,17 @@ class DistanceGoalController extends Controller
             ->with('success', 'DistanceGoal created successfully.');
     }
 
-    public function show(DistanceGoal $distance_goal)
+    public function show(DistanceGoal $distanceGoal)
     {
         return view('distance_goal', compact('distance_goal'));
     }
 
-    public function edit(DistanceGoal $distance_goal)
+    public function edit(DistanceGoal $distanceGoal)
     {
         return view('distance_goal.edit', compact('distance_goal'));
     }
 
-    public function update(Request $request, DistanceGoal $distance_goal)
+    public function update(Request $request, DistanceGoal $distanceGoal)
     {
         $request->validate([
             'sport' => 'required',
@@ -58,15 +58,15 @@ class DistanceGoalController extends Controller
             'end_date' => 'required',
             'state' => 'required',
         ]);
-        $distance_goal->update($request->all());
+        $distanceGoal->update($request->all());
 
         return redirect()->route('distance_goal')
             ->with('success', 'DistanceGoal updated successfully');
     }
 
-    public function destroy(DistanceGoal $distance_goal)
+    public function destroy(DistanceGoal $distanceGoal)
     {
-        $distance_goal->delete();
+        $distanceGoal->delete();
 
         return redirect()->route('distance_goal')
             ->with('success', 'DistanceGoal deleted successfully');
@@ -109,7 +109,7 @@ class DistanceGoalController extends Controller
             $pastWeekDates[] = $date->toDateString();
         }
 
-        $currentWeekActivities = [];
+        $curWeekAct = [];
         $pastWeekActivities = [];
 
         $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
@@ -117,28 +117,28 @@ class DistanceGoalController extends Controller
         foreach ($currentWeekDates as $index => $date) {
             $day = date('d', strtotime($date));
             $month = date('m', strtotime($date));
-            $currentWeekActivities['dates'][$index] = $weekDaysLetter[$index] . ' ' . $day . '/' . $month;
+            $curWeekAct['dates'][$index] = $weekDaysLetter[$index] . ' ' . $day . '/' . $month;
 
-            $currentWeekActivitiesDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')
+            $curWeekActDB = Activities::where('start_date_local', '>=', $date . ' 00:00:00')
                 ->where('start_date_local', '<=', $date . ' 23:59:59')
                 ->get();
-            foreach ($currentWeekActivitiesDB as $activity) {
+            foreach ($curWeekActDB as $activity) {
                 if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
-                    $currentWeekActivities[1][$index] = $activity->moving_time / 3600;
+                    $curWeekAct[1][$index] = $activity->moving_time / 3600;
                 } elseif ($activity->type == 'Run') {
-                    $currentWeekActivities[2][$index] = $activity->moving_time / 3600;
+                    $curWeekAct[2][$index] = $activity->moving_time / 3600;
                 } elseif ($activity->type == 'Swim') {
-                    $currentWeekActivities[0][$index] = $activity->moving_time / 3600;
+                    $curWeekAct[0][$index] = $activity->moving_time / 3600;
                 }
             }
-            if (!isset($currentWeekActivities[0][$index])) {
-                $currentWeekActivities[0][$index] = 0;
+            if (!isset($curWeekAct[0][$index])) {
+                $curWeekAct[0][$index] = 0;
             }
-            if (!isset($currentWeekActivities[1][$index])) {
-                $currentWeekActivities[1][$index] = 0;
+            if (!isset($curWeekAct[1][$index])) {
+                $curWeekAct[1][$index] = 0;
             }
-            if (!isset($currentWeekActivities[2][$index])) {
-                $currentWeekActivities[2][$index] = 0;
+            if (!isset($curWeekAct[2][$index])) {
+                $curWeekAct[2][$index] = 0;
             }
         }
 
@@ -169,7 +169,7 @@ class DistanceGoalController extends Controller
             }
         }
 
-        //dd($currentWeekActivities, $pastWeekActivities);
+        //dd($curWeekAct, $pastWeekActivities);
 
         $fiveLastWeeks = $this->getFiveLastWeeksForChart();
 
@@ -184,7 +184,7 @@ class DistanceGoalController extends Controller
 
         return view('welcome', compact(
             'activeGoals',
-            'currentWeekActivities',
+            'curWeekAct',
             'pastWeekActivities',
             'fiveLastWeeks',
             'swimLastYear',
@@ -285,6 +285,7 @@ class DistanceGoalController extends Controller
         $pastFourEnd = Carbon::now()->endOfWeek()->subWeek(4);
         $pastFourWeekNumber = Carbon::now()->subWeek(4)->weekOfYear;
 
+        $fiveLastWeeks = [];
         $fiveLastWeeks['dates'] = [
             'S ' . $pastFourWeekNumber,
             'S ' . $pastThreeWeekNumber,
@@ -293,23 +294,23 @@ class DistanceGoalController extends Controller
             'S ' . $currentWeekNumber
         ];
 
-        $pastFourWeekNumberActivities = Activities::where('start_date_local', '>=', $pastFourStart . ' 00:00:00')
+        $pastFourWeekNumAct = Activities::where('start_date_local', '>=', $pastFourStart . ' 00:00:00')
             ->where('start_date_local', '<=', $pastFourEnd . ' 23:59:59')
             ->get();
-        $pastThreeWeekNumberActivities = Activities::where('start_date_local', '>=', $pastThreeStart . ' 00:00:00')
+        $pastThreeWeekNumAct = Activities::where('start_date_local', '>=', $pastThreeStart . ' 00:00:00')
             ->where('start_date_local', '<=', $pastThreeEnd . ' 23:59:59')
             ->get();
-        $pastTwoWeekNumberActivities = Activities::where('start_date_local', '>=', $pastTwoStart . ' 00:00:00')
+        $pastTwoWeekNumAct = Activities::where('start_date_local', '>=', $pastTwoStart . ' 00:00:00')
             ->where('start_date_local', '<=', $pastTwoEnd . ' 23:59:59')
             ->get();
-        $pastOneWeekNumberActivities = Activities::where('start_date_local', '>=', $pastOneStart . ' 00:00:00')
+        $pastOneWeekNumAct = Activities::where('start_date_local', '>=', $pastOneStart . ' 00:00:00')
             ->where('start_date_local', '<=', $pastOneEnd . ' 23:59:59')
             ->get();
-        $currentWeekNumberActivities = Activities::where('start_date_local', '>=', $currentWeekStart . ' 00:00:00')
+        $curWeekNumAct = Activities::where('start_date_local', '>=', $currentWeekStart . ' 00:00:00')
             ->where('start_date_local', '<=', $currentWeekEnd . ' 23:59:59')
             ->get();
 
-        foreach ($pastFourWeekNumberActivities as $activity) {
+        foreach ($pastFourWeekNumAct as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][0] = (isset($fiveLastWeeks[1][0]) ? $fiveLastWeeks[1][0] : null);
                 $fiveLastWeeks[1][0] += ($activity->moving_time / 3600);
@@ -322,7 +323,7 @@ class DistanceGoalController extends Controller
             }
         }
 
-        foreach ($pastThreeWeekNumberActivities as $activity) {
+        foreach ($pastThreeWeekNumAct as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][1] = (isset($fiveLastWeeks[1][1]) ? $fiveLastWeeks[1][1] : null);
                 $fiveLastWeeks[1][1] += ($activity->moving_time / 3600);
@@ -335,7 +336,7 @@ class DistanceGoalController extends Controller
             }
         }
 
-        foreach ($pastTwoWeekNumberActivities as $activity) {
+        foreach ($pastTwoWeekNumAct as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][2] = (isset($fiveLastWeeks[1][2]) ? $fiveLastWeeks[1][2] : null);
                 $fiveLastWeeks[1][2] += ($activity->moving_time / 3600);
@@ -348,7 +349,7 @@ class DistanceGoalController extends Controller
             }
         }
 
-        foreach ($pastOneWeekNumberActivities as $activity) {
+        foreach ($pastOneWeekNumAct as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][3] = (isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : null);
                 $fiveLastWeeks[1][3] += ($activity->moving_time / 3600);
@@ -361,7 +362,7 @@ class DistanceGoalController extends Controller
             }
         }
 
-        foreach ($currentWeekNumberActivities as $activity) {
+        foreach ($curWeekNumAct as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][4] = (isset($fiveLastWeeks[1][4]) ? $fiveLastWeeks[1][4] : null);
                 $fiveLastWeeks[1][4] += ($activity->moving_time / 3600);
@@ -427,13 +428,13 @@ class DistanceGoalController extends Controller
 
     public function getWeekStat($year, $week)
     {
-        $WeekStart = Carbon::now()->setISODate($year, $week)->startOfWeek();
-        $WeekEnd = Carbon::now()->setISODate($year, $week)->endOfWeek();
+        $weekStart = Carbon::now()->setISODate($year, $week)->startOfWeek();
+        $weekEnd = Carbon::now()->setISODate($year, $week)->endOfWeek();
 
-        $WeekDates = [];
+        $weekDates = [];
 
-        for ($date = $WeekStart; $date <= $WeekEnd; $date->addDay()) {
-            $WeekDates[] = $date->toDateString();
+        for ($date = $weekStart; $date <= $weekEnd; $date->addDay()) {
+            $weekDates[] = $date->toDateString();
         }
 
         $weekStat = [];
@@ -444,7 +445,7 @@ class DistanceGoalController extends Controller
 
         $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-        foreach ($WeekDates as $index => $date) {
+        foreach ($weekDates as $index => $date) {
             $day = date('d', strtotime($date));
             $month = date('m', strtotime($date));
             $weekStat['dates'][$index] = $weekDaysLetter[$index] . ' ' . $day . '/' . $month;
