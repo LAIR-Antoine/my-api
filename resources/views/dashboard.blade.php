@@ -35,6 +35,7 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Sport</th>
                                 <th>Activités</th>
                                 <th>Distance</th>
                                 <th>Temps</th>
@@ -58,6 +59,7 @@
                                 @endphp
                                 <tr>
                                     <td>{{ date("d/m/Y", strtotime($activity->start_date_local)) }}</td>
+                                    <td class="sportEmote">@if($activity->type == 'Swim') 🏊🏻‍♂️ @elseif($activity->type == 'Ride' || $activity->type == 'VirtualRide') 🚴🏻‍♂️ @elseif($activity->type == 'Run') 🏃🏻‍♂️ @endif</td>
                                     <td><a href={{ 'https://www.strava.com/activities/' . $activity->strava_id }} target="_blank">{{ $activity->name }}</a></td>
                                     <td>{{ str_replace('.', ',', round($activity->distance / 1000, 2)) }} km</td>
                                     <td>{{ $time }}</td>
@@ -92,5 +94,8 @@
     }
     .blue-button {
         background-color: rgb(69, 148, 209);  
+    }
+    .sportEmote {
+        font-size: 2rem;
     }
 </style>
