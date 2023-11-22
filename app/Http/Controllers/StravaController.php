@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Activities;
 use App\Models\DistanceGoal;
 
-
 class StravaController extends Controller
 {
     public function dashboard(Request $request)
@@ -66,7 +65,7 @@ class StravaController extends Controller
         }
     }
 
-    public function syncAllActivities() 
+    public function syncAllActivities()
     {
         $user = User::find(auth()->id());
 
@@ -87,7 +86,7 @@ class StravaController extends Controller
                     $activitiyToUpdate->name = $activity->name;
                     $activitiyToUpdate->save();
                 } else {
-                    $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null); 
+                    $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null);
                     $activitiyToCreate = Activities::create([
                         'strava_id' => $activity->id,
                         'name' => $activity->name,
@@ -114,7 +113,7 @@ class StravaController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function syncActivities() 
+    public function syncActivities()
     {
         $user = User::find(auth()->id());
         $this->refreshTokenIfNeeded($user);
@@ -130,7 +129,7 @@ class StravaController extends Controller
                 $activitiyToUpdate->name = $activity->name;
                 $activitiyToUpdate->save();
             } else {
-                $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null); 
+                $location = ($activity->location_city ? $activity->location_city . ', ' : null) . ($activity->location_state ? $activity->location_state . ', ' : null) . ($activity->location_country ? $activity->location_country : null);
                 $activitiyToCreate = Activities::create([
                     'strava_id' => $activity->id,
                     'name' => $activity->name,
@@ -156,7 +155,8 @@ class StravaController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function refreshGoals() {
+    public function refreshGoals()
+    {
         $goals = DistanceGoal::all();
 
         foreach ($goals as $goal) {
@@ -166,9 +166,9 @@ class StravaController extends Controller
             foreach ($activities as $activity) {
                 if (($activity->type == 'Ride' || $activity->type == 'VirtualRide') && $goal->sport == 'bike') {
                     $goal->distance_done += $activity->distance;
-                } else if (($activity->type == 'Run') && $goal->sport == 'run') {
+                } elseif (($activity->type == 'Run') && $goal->sport == 'run') {
                     $goal->distance_done += $activity->distance;
-                } else if (($activity->type == 'Swim') && $goal->sport == 'swim') {
+                } elseif (($activity->type == 'Swim') && $goal->sport == 'swim') {
                     $goal->distance_done += $activity->distance;
                 }
             }

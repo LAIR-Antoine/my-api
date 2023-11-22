@@ -19,5 +19,4 @@ class DistanceGoal extends Model
         'end_date',
         'state',
     ];
-    
 }

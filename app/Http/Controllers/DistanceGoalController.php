@@ -88,7 +88,7 @@ class DistanceGoalController extends Controller
             $today = date('Y-m-d');
             if ($today < $goal->begin_date) {
                 $goal->gapGoal = 0;
-            } else if ($today > $goal->end_date) {
+            } elseif ($today > $goal->end_date) {
                 $goal->gapGoal = $goal->distance_done - $goal->distance_to_do;
             }
         }
@@ -116,7 +116,6 @@ class DistanceGoalController extends Controller
         $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
         foreach ($currentWeekDates as $index => $date) {
-
             $day = date('d', strtotime($date));
             $month = date('m', strtotime($date));
             $currentWeekActivities['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
@@ -125,9 +124,9 @@ class DistanceGoalController extends Controller
             foreach ($currentWeekActivitiesDB as $activity) {
                 if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                     $currentWeekActivities[1][$index] = $activity->moving_time / 3600;
-                } else if ($activity->type == 'Run') {
+                } elseif ($activity->type == 'Run') {
                     $currentWeekActivities[2][$index] = $activity->moving_time / 3600;
-                } else if ($activity->type == 'Swim') {
+                } elseif ($activity->type == 'Swim') {
                     $currentWeekActivities[0][$index] = $activity->moving_time / 3600;
                 }
             }
@@ -143,7 +142,6 @@ class DistanceGoalController extends Controller
         }
         
         foreach ($pastWeekDates as $index => $date) {
-
             $day = date('d', strtotime($date));
             $month = date('m', strtotime($date));
             $pastWeekActivities['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
@@ -151,9 +149,9 @@ class DistanceGoalController extends Controller
             foreach ($pastWeekActivitiesDB as $activity) {
                 if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                     $pastWeekActivities[1][$index] = $activity->moving_time / 3600;
-                } else if ($activity->type == 'Run') {
+                } elseif ($activity->type == 'Run') {
                     $pastWeekActivities[2][$index] = $activity->moving_time / 3600;
-                } else if ($activity->type == 'Swim') {
+                } elseif ($activity->type == 'Swim') {
                     $pastWeekActivities[0][$index] = $activity->moving_time / 3600;
                 }
             }
@@ -185,7 +183,7 @@ class DistanceGoalController extends Controller
     }
 
     public function getYearDistancePerMonthPerSport($year, $sport)
-    {        
+    {
         $activities = Activities::where('start_date_local', '>=', $year . '-01-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
             ->where('type', 'LIKE', '%'.$sport.'%')
@@ -195,51 +193,51 @@ class DistanceGoalController extends Controller
 
         $yearDistancePerMonth[1] = round($activities->where('start_date_local', '>=', $year . '-01-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-01-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[2] = round($activities->where('start_date_local', '>=', $year . '-02-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-02-29 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[3] = round($activities->where('start_date_local', '>=', $year . '-03-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-03-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
         
         $yearDistancePerMonth[4] = round($activities->where('start_date_local', '>=', $year . '-04-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-04-30 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[5] = round($activities->where('start_date_local', '>=', $year . '-05-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-05-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[6] = round($activities->where('start_date_local', '>=', $year . '-06-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-06-30 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[7] = round($activities->where('start_date_local', '>=', $year . '-07-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-07-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[8] = round($activities->where('start_date_local', '>=', $year . '-08-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-08-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[9] = round($activities->where('start_date_local', '>=', $year . '-09-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-09-30 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[10] = round($activities->where('start_date_local', '>=', $year . '-10-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-10-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[11] = round($activities->where('start_date_local', '>=', $year . '-11-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-11-30 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         $yearDistancePerMonth[12] = round($activities->where('start_date_local', '>=', $year . '-12-01 00:00:00')
             ->where('start_date_local', '<=', $year . '-12-31 23:59:59')
-            ->sum('distance') /1000 , 1);
+            ->sum('distance') /1000, 1);
 
         foreach ($yearDistancePerMonth as $key => $value) {
             if ($value == null) {
@@ -247,10 +245,11 @@ class DistanceGoalController extends Controller
             }
         }
 
-        return $yearDistancePerMonth;       
+        return $yearDistancePerMonth;
     }
 
-    public function getFiveLastWeeksForChart() {
+    public function getFiveLastWeeksForChart()
+    {
         
         $currentWeekStart = Carbon::now()->startOfWeek();
         $currentWeekEnd = Carbon::now()->endOfWeek();
@@ -289,9 +288,9 @@ class DistanceGoalController extends Controller
         foreach ($pastFourWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][0] = (isset($fiveLastWeeks[1][0]) ? $fiveLastWeeks[1][0] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Run') {
+            } elseif ($activity->type == 'Run') {
                 $fiveLastWeeks[2][0] =  (isset($fiveLastWeeks[2][0]) ? $fiveLastWeeks[2][0] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Swim') {
+            } elseif ($activity->type == 'Swim') {
                 $fiveLastWeeks[0][0] =  (isset($fiveLastWeeks[0][0]) ? $fiveLastWeeks[0][0] : null) + ($activity->moving_time / 3600);
             }
         }
@@ -299,9 +298,9 @@ class DistanceGoalController extends Controller
         foreach ($pastThreeWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][1] = (isset($fiveLastWeeks[1][1]) ? $fiveLastWeeks[1][1] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Run') {
+            } elseif ($activity->type == 'Run') {
                 $fiveLastWeeks[2][1] = (isset($fiveLastWeeks[2][1]) ? $fiveLastWeeks[2][1] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Swim') {
+            } elseif ($activity->type == 'Swim') {
                 $fiveLastWeeks[0][1] = (isset($fiveLastWeeks[0][1]) ? $fiveLastWeeks[0][1] : null) + ($activity->moving_time / 3600);
             }
         }
@@ -309,9 +308,9 @@ class DistanceGoalController extends Controller
         foreach ($pastTwoWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][2] = (isset($fiveLastWeeks[1][2]) ? $fiveLastWeeks[1][2] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Run') {
+            } elseif ($activity->type == 'Run') {
                 $fiveLastWeeks[2][2] = (isset($fiveLastWeeks[2][2]) ? $fiveLastWeeks[2][2] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Swim') {
+            } elseif ($activity->type == 'Swim') {
                 $fiveLastWeeks[0][2] = (isset($fiveLastWeeks[0][2]) ? $fiveLastWeeks[0][2] : null) + ($activity->moving_time / 3600);
             }
         }
@@ -319,9 +318,9 @@ class DistanceGoalController extends Controller
         foreach ($pastOneWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][3] = (isset($fiveLastWeeks[1][3]) ? $fiveLastWeeks[1][3] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Run') {
+            } elseif ($activity->type == 'Run') {
                 $fiveLastWeeks[2][3] = (isset($fiveLastWeeks[2][3]) ? $fiveLastWeeks[2][3] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Swim') {
+            } elseif ($activity->type == 'Swim') {
                 $fiveLastWeeks[0][3] = (isset($fiveLastWeeks[0][3]) ? $fiveLastWeeks[0][3] : null) + ($activity->moving_time / 3600);
             }
         }
@@ -329,9 +328,9 @@ class DistanceGoalController extends Controller
         foreach ($currentWeekNumberActivities as $activity) {
             if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                 $fiveLastWeeks[1][4] = (isset($fiveLastWeeks[1][4]) ? $fiveLastWeeks[1][4] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Run') {
+            } elseif ($activity->type == 'Run') {
                 $fiveLastWeeks[2][4] = (isset($fiveLastWeeks[2][4]) ? $fiveLastWeeks[2][4] : null) + ($activity->moving_time / 3600);
-            } else if ($activity->type == 'Swim') {
+            } elseif ($activity->type == 'Swim') {
                 $fiveLastWeeks[0][4] = (isset($fiveLastWeeks[0][4]) ? $fiveLastWeeks[0][4] : null) + ($activity->moving_time / 3600);
             }
         }
@@ -387,7 +386,8 @@ class DistanceGoalController extends Controller
         return $fiveLastWeeks;
     }
 
-    public function getWeekStat($year, $week) {
+    public function getWeekStat($year, $week)
+    {
         $WeekStart = Carbon::now()->setISODate($year, $week)->startOfWeek();
         $WeekEnd = Carbon::now()->setISODate($year, $week)->endOfWeek();
 
@@ -406,7 +406,6 @@ class DistanceGoalController extends Controller
         $weekDaysLetter = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
         foreach ($WeekDates as $index => $date) {
-
             $day = date('d', strtotime($date));
             $month = date('m', strtotime($date));
             $weekStat['dates'][$index] = $weekDaysLetter[$index].' '. $day .'/' . $month;
@@ -417,10 +416,10 @@ class DistanceGoalController extends Controller
                 if ($activity->type == 'Ride' || $activity->type == 'VirtualRide') {
                     $weekStat[1][$index] = $activity->moving_time / 3600;
                     $weekStat['totalDistanceBike'] += $activity->distance;
-                } else if ($activity->type == 'Run') {
+                } elseif ($activity->type == 'Run') {
                     $weekStat[2][$index] = $activity->moving_time / 3600;
                     $weekStat['totalDistanceRun'] += $activity->distance;
-                } else if ($activity->type == 'Swim') {
+                } elseif ($activity->type == 'Swim') {
                     $weekStat[0][$index] = $activity->moving_time / 3600;
                     $weekStat['totalDistanceSwim'] += $activity->distance;
                 }
@@ -446,7 +445,8 @@ class DistanceGoalController extends Controller
         return $weekStat;
     }
 
-    public function weekStat(Request $request) {
+    public function weekStat(Request $request)
+    {
         $weekStat = $this->getWeekStat($request->year, $request->week);
         $url = ['year' => $request->year, 'week' => $request->week];
 

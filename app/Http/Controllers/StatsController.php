@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Activities;
 use IntlDateFormatter;
 
-
 class StatsController extends Controller
 {
     
@@ -38,13 +37,13 @@ class StatsController extends Controller
             $yearStats[$year]->run = round(Activities::where('type', 'Run')
                 ->whereYear('start_date_local', $year)
                 ->sum('distance') /1000, 2);
-            
         }
 
         return view('stats', compact('yearStats'));
     }
 
-    public function monthStats($year) {
+    public function monthStats($year)
+    {
 
         $app = app();
         $monthStats = [];
@@ -75,18 +74,16 @@ class StatsController extends Controller
                 ->whereYear('start_date_local', $year)
                 ->whereMonth('start_date_local', $month)
                 ->sum('distance') /1000, 2);
-            
         }
 
         return view('monthStats', compact('monthStats', 'year'));
     }
 
-    public function getMonthName ($monthNumber) {
+    public function getMonthName($monthNumber)
+    {
         $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
         $formatter->setPattern('MMMM');
     
         return ucfirst($formatter->format(mktime(0, 0, 0, $monthNumber)));
     }
-    
-    
 }

@@ -30,5 +30,4 @@ class Activities extends Model
         'max_watts',
         'suffer_score'
     ];
-
 }
