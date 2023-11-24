@@ -27,7 +27,7 @@ class StravaController extends Controller
         $client = new Client();
         $response = $client->get($googleCalendar);
         $icalFile = $response->getBody()->getContents();
-        
+
 
         try {
             $ical = new ICal($icalFile, array(
@@ -44,13 +44,12 @@ class StravaController extends Controller
             $today = Carbon::today();
 
 // Get the date 10 days from today
-$tenDaysLater = $today->copy()->addDays(15);
+            $tenDaysLater = $today->copy()->addDays(15);
 
 // Call the eventsFromRange method with dynamic dates
             $actualEvents = $ical->eventsFromRange($today->toDateString(), $tenDaysLater->toDateString());
             //dd($actualEvents);
             $calendar = $this->extractIcsData($actualEvents);
-            
         } catch (\Exception $e) {
             die($e);
         }
@@ -59,7 +58,8 @@ $tenDaysLater = $today->copy()->addDays(15);
         return view('dashboard', compact('activities', 'user', 'calendar'));
     }
 
-    public function extractIcsData($events) {
+    public function extractIcsData($events)
+    {
         $formattedEvents = [];
         foreach ($events as $index => $event) {
             $description = $event->description;
@@ -70,9 +70,9 @@ $tenDaysLater = $today->copy()->addDays(15);
                 $formattedEvents[$index]['date'] = $this->convertIcsDate($event->dtstart);
                 if (str_contains($event->summary, '🏃')) {
                     $formattedEvents[$index]['type'] = 'Run';
-                } else if (str_contains($event->summary, '🏊')) {
+                } elseif (str_contains($event->summary, '🏊')) {
                     $formattedEvents[$index]['type'] = 'Swim';
-                } else if (str_contains($event->summary, '🚴')) {
+                } elseif (str_contains($event->summary, '🚴')) {
                     $formattedEvents[$index]['type'] = 'Ride';
                 } else {
                     $formattedEvents[$index]['type'] = 'Other';
@@ -82,8 +82,6 @@ $tenDaysLater = $today->copy()->addDays(15);
                     $formattedEvents[$index]['duration'] = $this->convertTime($matches[1]);
                 }
             }
-            
-
         }
 
         return $formattedEvents;
@@ -97,29 +95,39 @@ $tenDaysLater = $today->copy()->addDays(15);
         return $date;
     }
 
-    public function convertTime($time) 
+    public function convertTime($time)
     {
         list($hours, $minutes, $seconds) = explode(':', $time);
-    
+
         // Removing leading zeros
         $hours = ltrim($hours, '0');
         $minutes = ltrim($minutes, '0');
         $seconds = ltrim($seconds, '0');
-    
-        // Adding default values if any part is empty
-        if (empty($hours)) $hours = '0';
-        if (empty($minutes)) $minutes = '0';
-        if (empty($seconds)) $seconds = '0';
 
-        if (strlen($minutes) == 1) $minutes = '0' . $minutes;
-        if (strlen($seconds) == 1) $seconds = '0' . $seconds;
+        // Adding default values if any part is empty
+        if (empty($hours)) {
+            $hours = '0';
+        }
+        if (empty($minutes)) {
+            $minutes = '0';
+        }
+        if (empty($seconds)) {
+            $seconds = '0';
+        }
+
+        if (strlen($minutes) == 1) {
+            $minutes = '0' . $minutes;
+        }
+        if (strlen($seconds) == 1) {
+            $seconds = '0' . $seconds;
+        }
 
         if ($hours == 0) {
             $total = $minutes . "'" . $seconds . "''";
         } else {
             $total = $hours . 'h' . $minutes . "'" . $seconds . "''";
         }
-    
+
         return $total;
     }
 

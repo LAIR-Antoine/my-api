@@ -1,4 +1,4 @@
-name: Tests
+name: Laravel
 
 on:
   push:
@@ -45,3 +45,6 @@ jobs:
 
       #- name: Execute tests
        # run: vendor/bin/phpunit
+
+      - name: Run PHP_CodeSniffer
+        run: vendor/bin/phpcs --standard=PSR12 src/       
