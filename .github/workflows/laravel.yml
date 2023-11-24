@@ -47,4 +47,4 @@ jobs:
        # run: vendor/bin/phpunit
 
       - name: Run PHP_CodeSniffer
-        run: vendor/bin/phpcs --standard=PSR12 src/       
+        run: vendor/bin/phpcs --standard=PSR12 app/       
