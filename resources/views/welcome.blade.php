@@ -1097,6 +1097,7 @@
         var swimWeek = @json($fiveLastWeeks[0]);
         var bikeWeek = @json($fiveLastWeeks[1]);
         var runWeek = @json($fiveLastWeeks[2]);
+        console.log(swimWeek, bikeWeek, runWeek);
 
         var ctx3 = document.getElementById('sportTimeChart3').getContext('2d');
         var chart3 = new Chart(ctx3, {
