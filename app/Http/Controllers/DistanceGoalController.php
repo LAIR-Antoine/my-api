@@ -422,6 +422,7 @@ class DistanceGoalController extends Controller
         if (!isset($fiveLastWeeks[2][4])) {
             $fiveLastWeeks[2][4] = 0;
         }
+        var_dump($fiveLastWeeks);
 
         return $fiveLastWeeks;
     }
