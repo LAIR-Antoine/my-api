@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <a href="{{ route('habbits.create') }}" class="btn btn-primary">Remplir mes habitudes</a>
+                    <br /><br />
                     <div class="scrollable-table">
                         <table>
                             <thead>
@@ -148,5 +149,13 @@
         .sticky-column {
             min-width: 110px;
         }
+    }
+
+    .btn-primary {
+        background-color: #3490dc;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
     }
 </style>

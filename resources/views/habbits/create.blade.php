@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Ajouter/Modifier des habitudes pour une journée') }}
+            {{ __('Habitudes pour une journée') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,6 @@
                     <form action="{{ route('habbits.store') }}" method="POST">
                         @csrf
                         <div>
-                            <label for="day">Jour: </label>
                             <input type="date" name="day" id="day" required onchange="loadHabits()">
                         </div>
 
@@ -27,8 +26,8 @@
                             </div>
                             @endforeach
                         </div>
-
-                        <button type="submit">Enregistrer</button>
+                        <br />
+                        <button class="submit-button" type="submit">Enregistrer</button>
                     </form>
                 </div>
             </div>
@@ -78,3 +77,25 @@ function toggleTimeInput(checkbox, habitId) {
 }
 
 </script>
+
+<style>
+    .submit-button {
+        background-color: #3490dc !important;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    [type='checkbox']:checked:hover, [type='checkbox']:checked:focus, [type='radio']:checked:hover, [type='radio']:checked:focus {
+        background-color: #3490dc !important;
+    }
+
+    input {
+        margin: 5px;
+    }
+
+    input[type="text"], input[type="date"] {
+        border: #3490dc 1px solid;
+        border-radius: 8px;
+    }
+</style>
