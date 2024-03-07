@@ -138,4 +138,12 @@ foreach ($days as $day) {
         padding: 2px;
         border-radius: 2px;
     }
+    @media (max-width: 768px) {
+        table {
+            font-size: 10px;          
+        }
+        .sticky-column {
+            min-width: 110px;
+        }
+    }
 </style>
