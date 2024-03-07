@@ -9,6 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <a href="{{ route('habbits.create') }}" class="btn btn-primary">Remplir mes habitudes</a>
                     <div class="scrollable-table">
                         <table>
                             <thead>
@@ -23,9 +24,9 @@
                                 @foreach ($habits as $habit)
                                     @php
                                         // Déterminer si le temps est utilisé pour l'habitude courante
-$timeUsed = false;
-foreach ($days as $day) {
-    $record = $habit->days->firstWhere('id', $day->id);
+                                        $timeUsed = false;
+                                        foreach ($days as $day) {
+                                            $record = $habit->days->firstWhere('id', $day->id);
                                             if ($record && !is_null($record->pivot->time)) {
                                                 $timeUsed = true;
                                                 break;
@@ -138,10 +139,12 @@ foreach ($days as $day) {
         padding: 2px;
         border-radius: 2px;
     }
+
     @media (max-width: 768px) {
         table {
-            font-size: 10px;          
+            font-size: 10px;
         }
+
         .sticky-column {
             min-width: 110px;
         }

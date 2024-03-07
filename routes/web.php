@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/habbits', [HabbitsController::class, 'index'])->middleware(['auth', 'verified'])->name('habbits');
+Route::get('/habbits/create', [HabbitsController::class, 'create'])->middleware(['auth', 'verified'])->name('habbits.create');
+Route::post('/habbits', [HabbitsController::class, 'store'])->middleware(['auth', 'verified'])->name('habbits.store');
+Route::get('/habbits/day/{date}', [HabbitsController::class, 'getHabitsForDay'])->name('habbits.forDay');
+
 
 
 Route::resource('distance_goal', DistanceGoalController::class)->middleware(['auth', 'verified'])->name('index', 'distance_goal');
