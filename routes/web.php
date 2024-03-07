@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DistanceGoalController;
 use App\Http\Controllers\StravaController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\HabbitsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/habbits', [HabbitsController::class, 'index'])->middleware(['auth', 'verified'])->name('habbits');
+
 
 Route::resource('distance_goal', DistanceGoalController::class)->middleware(['auth', 'verified'])->name('index', 'distance_goal');
 

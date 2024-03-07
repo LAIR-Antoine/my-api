@@ -30,15 +30,8 @@
                     <br>
 
                     <br><br>
-                    <h2>Prochaines séances</h2>
+                    {{-- <h2>Prochaines séances</h2>
                     <ul class="calendarBlock">
-                        {{-- <li><p>Lundi</p></li>
-                        <li><p>Mardi</p></li>
-                        <li><p>Mercredi</p></li>
-                        <li><p>Jeudi</p></li>
-                        <li><p>Vendredi</p></li>
-                        <li><p>Samedi</p></li>
-                        <li><p>Dimanche</p></li> --}}
                         @foreach ($calendar as $day)
                             <li class="calendarCard {{ $day['type'] }}Card">
                                 <p>{{ $day['date'] }}</p>
@@ -48,7 +41,7 @@
                         @endforeach
                     </ul>
 
-                    <br><br>
+                    <br><br> --}}
                     <table>
                         <thead>
                             <tr>
