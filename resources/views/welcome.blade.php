@@ -873,7 +873,7 @@
                     <div class="w3-container">
 
                         <div class="w3-light-grey w3-round-xlarge">
-                            <div class="w3-container w3-blue w3-round-xlarge" style="width:{{ $goal->avancement }}%">
+                            <div class="w3-container w3-blue w3-round-xlarge" style="width:{{ $goal->avancement <= 100 ? $goal->avancement : 100 }}%">
                                 {{ $goal->avancement }}%</div>
                         </div>
                     </div>
@@ -1097,6 +1097,7 @@
         var swimWeek = @json($fiveLastWeeks[0]);
         var bikeWeek = @json($fiveLastWeeks[1]);
         var runWeek = @json($fiveLastWeeks[2]);
+        console.log(swimWeek, bikeWeek, runWeek);
 
         var ctx3 = document.getElementById('sportTimeChart3').getContext('2d');
         var chart3 = new Chart(ctx3, {
@@ -1189,7 +1190,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Natation - 2022',
+                        label: 'Natation - 2023',
                         data: swimLastYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1228,7 +1229,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Natation - 2023',
+                        label: 'Natation - 2024',
                         data: swimThisYear,
                         backgroundColor: 'rgba(69, 148, 209, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1278,7 +1279,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Vélo - 2022',
+                        label: 'Vélo - 2023',
                         data: bikeLastYear,
                         backgroundColor: 'rgba(100, 217, 208, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1317,7 +1318,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Vélo - 2023',
+                        label: 'Vélo - 2024',
                         data: bikeThisYear,
                         backgroundColor: 'rgba(100, 217, 208, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1367,7 +1368,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Course - 2022',
+                        label: 'Course - 2023',
                         data: runLastYear,
                         backgroundColor: 'rgba(255, 196, 0, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
@@ -1408,7 +1409,7 @@
                 //labels: monthOfYear,
                 datasets: [{
                         barThickness: 20,
-                        label: 'Course - 2023',
+                        label: 'Course - 2024',
                         data: runThisYear,
                         backgroundColor: 'rgba(255, 196, 0, 1)',
                         stack: 'stack1' // Assign a stack name for Sport 1
