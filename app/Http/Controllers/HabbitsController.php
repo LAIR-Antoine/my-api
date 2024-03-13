@@ -26,7 +26,16 @@ class HabbitsController extends Controller
 
     public function create()
     {
-        $habits = Habbits::all();
+        $today = Carbon::today();
+
+        $habits = Habits::where(function ($query) use ($today) {
+                $query->where('begin_date', '<=', $today)
+                    ->where('end_date', '>=', $today);
+            })->orWhere(function($query) {
+                $query->whereNull('begin_date')
+                    ->whereNull('end_date');
+            })->get();
+        
         return view('habbits.create', compact('habits'));
     }
 
