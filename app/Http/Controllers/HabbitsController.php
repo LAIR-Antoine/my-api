@@ -28,7 +28,7 @@ class HabbitsController extends Controller
     {
         $today = Carbon::today();
 
-        $habits = Habits::where(function ($query) use ($today) {
+        $habits = Habbits::where(function ($query) use ($today) {
                 $query->where('begin_date', '<=', $today)
                     ->where('end_date', '>=', $today);
             })->orWhere(function($query) {
