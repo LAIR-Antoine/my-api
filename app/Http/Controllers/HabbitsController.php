@@ -27,7 +27,7 @@ class HabbitsController extends Controller
     public function archive()
     {
         $endDate = Carbon::today();
-        $startDate = Carbon::createFromFormat('Y-m-d', '2024-01-01');
+        $startDate = Carbon::createFromFormat('Y-m-d', '2023-12-12');
     
         $days = Days::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
     
