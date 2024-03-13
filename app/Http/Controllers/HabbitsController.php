@@ -13,7 +13,7 @@ class HabbitsController extends Controller
     public function index()
     {
         $endDate = Carbon::today();
-        $startDate = $endDate->copy()->subDays(99);
+        $startDate = $endDate->copy()->subDays(49);
     
         $days = Days::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
     
@@ -22,6 +22,20 @@ class HabbitsController extends Controller
         }])->where('type', 'active')->get();
     
         return view('habbits', compact('days', 'habits'));
+    }
+
+    public function archive()
+    {
+        $endDate = Carbon::today();
+        $startDate = Carbon::createFromFormat('Y-m-d', '2024-01-01');
+    
+        $days = Days::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+    
+        $habits = Habbits::with(['days' => function($query) use ($startDate, $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc');
+        }])->get();
+    
+        return view('habbits.archive', compact('days', 'habits'));
     }
 
     public function create()
