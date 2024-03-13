@@ -57,15 +57,18 @@ class HabbitsController extends Controller
 
     public function getHabitsForDay($date)
     {
-        $day = Days::whereDate('date', $date)->first();
+        $day = Days::whereDate('date', $date)->with('habbits')->first();
         $habits = [];
-
+    
         if ($day) {
             $habits = $day->habbits->map(function ($habit) {
-                return ['habbit_id' => $habit->id];
+                return [
+                    'habbit_id' => $habit->id,
+                    'time' => $habit->pivot->time ?? null,
+                ];
             });
         }
-
+    
         return response()->json($habits);
     }
 }
