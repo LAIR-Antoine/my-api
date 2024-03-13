@@ -19,7 +19,7 @@ class HabbitsController extends Controller
     
         $habits = Habbits::with(['days' => function($query) use ($startDate, $endDate) {
             $query->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc');
-        }])->get();
+        }])->where('type', 'active')->get();
     
         return view('habbits', compact('days', 'habits'));
     }
