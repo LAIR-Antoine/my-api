@@ -79,6 +79,14 @@
                                     @endif
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="sticky-column"></th>
+                                    @foreach ($days as $day)
+                                        <th>{{ date("d/m", strtotime($day->date)) }}</th>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -141,6 +149,32 @@
         background-color: rgb(255, 190, 190) !important;
         padding: 2px;
         border-radius: 2px;
+    }
+
+    tfoot th {
+        font-size: 12px;
+    }
+
+    tfoot th {
+        font-size: 12px;
+    }
+
+    .scrollable-table::-webkit-scrollbar {
+    width: 5px;
+    }
+
+    .scrollable-table::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+    }
+    
+    .scrollable-table::-webkit-scrollbar-thumb {
+    background: #3490dc; 
+    border-radius: 10px;
+    }
+
+    .scrollable-table::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
     }
 
     @media (max-width: 768px) {
