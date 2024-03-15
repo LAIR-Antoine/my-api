@@ -179,12 +179,16 @@
 
     @media (max-width: 768px) {
         table {
-            font-size: 10px !important;
+            font-size: 10px;
         }
 
         .sticky-column {
             min-width: 110px;
         }
+                
+        tfoot th {
+            font-size: 10px;
+        }   
     }
 
     .btn-primary {
