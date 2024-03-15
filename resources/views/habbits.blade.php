@@ -81,6 +81,14 @@
                                     @endif
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="sticky-column"></th>
+                                    @foreach ($days as $day)
+                                        <th>{{ date("d/m", strtotime($day->date)) }}</th>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <br /><br />
