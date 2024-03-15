@@ -179,7 +179,7 @@
 
     @media (max-width: 768px) {
         table {
-            font-size: 10px;
+            font-size: 10px !important;
         }
 
         .sticky-column {
