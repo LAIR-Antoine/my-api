@@ -1,3 +1,7 @@
+@section('title')
+    Habitudes
+@endsection
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -53,12 +57,10 @@ function loadHabits() {
                     var checkbox = document.getElementById(`habit_${habit.habbit_id}`);
                     if (checkbox) {
                         checkbox.checked = true;
-                        if (habit.time) {
-                            var timeInput = document.getElementById(`time_${habit.habbit_id}`);
-                            if (timeInput) {
-                                timeInput.style.display = 'block';
-                                timeInput.value = habit.time;
-                            }
+                        var timeInput = document.getElementById(`time_${habit.habbit_id}`);
+                        if (habit.time && timeInput) {
+                            timeInput.style.display = 'block';
+                            timeInput.value = habit.time;
                         }
                     }
                 });

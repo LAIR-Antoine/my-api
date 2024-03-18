@@ -13,7 +13,21 @@ class HabbitsController extends Controller
     public function index()
     {
         $endDate = Carbon::today();
-        $startDate = $endDate->copy()->subDays(99);
+        $startDate = $endDate->copy()->subDays(49);
+    
+        $days = Days::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+    
+        $habits = Habbits::with(['days' => function($query) use ($startDate, $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc');
+        }])->where('type', 'active')->get();
+    
+        return view('habbits', compact('days', 'habits'));
+    }
+
+    public function archive()
+    {
+        $endDate = Carbon::today();
+        $startDate = Carbon::createFromFormat('Y-m-d', '2023-12-12');
     
         $days = Days::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
     
@@ -21,12 +35,13 @@ class HabbitsController extends Controller
             $query->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc');
         }])->get();
     
-        return view('habbits', compact('days', 'habits'));
+        return view('habbits.archive', compact('days', 'habits'));
     }
 
     public function create()
     {
-        $habits = Habbits::all();
+        $habits = Habbits::where('type', 'active')->get();
+        
         return view('habbits.create', compact('habits'));
     }
 
@@ -56,15 +71,18 @@ class HabbitsController extends Controller
 
     public function getHabitsForDay($date)
     {
-        $day = Days::whereDate('date', $date)->first();
+        $day = Days::whereDate('date', $date)->with('habbits')->first();
         $habits = [];
-
+    
         if ($day) {
             $habits = $day->habbits->map(function ($habit) {
-                return ['habbit_id' => $habit->id];
+                return [
+                    'habbit_id' => $habit->id,
+                    'time' => $habit->pivot->time ?? null,
+                ];
             });
         }
-
+    
         return response()->json($habits);
     }
 }

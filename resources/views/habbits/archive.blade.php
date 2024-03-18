@@ -13,8 +13,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <a href="{{ route('habbits.create') }}" class="btn btn-primary">Remplir mes habitudes</a>
-                    <br /><br />
                     <div class="scrollable-table">
                         <table>
                             <thead>
@@ -91,8 +89,6 @@
                             </tfoot>
                         </table>
                     </div>
-                    <br /><br />
-                    <a href="{{ route('habbits.archive') }}" class="btn btn-primary">Vue complète</a>
                 </div>
             </div>
         </div>
@@ -185,7 +181,7 @@
         .sticky-column {
             min-width: 110px;
         }
-                
+        
         tfoot th {
             font-size: 10px;
         }   
