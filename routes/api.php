@@ -16,8 +16,4 @@ use App\Http\Controllers\RecoController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('/reco', 'RecoController@index');
+Route::get('/reco', [ RecoController::class, 'index']);
