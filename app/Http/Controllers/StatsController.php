@@ -13,17 +13,17 @@ class StatsController extends Controller
         $app = app();
         $yearStats = [];
         $yearStatsAtDay = [];
-    
+
         $firstActivity = Activities::orderBy('start_date_local', 'asc')->first();
         $lastActivity = Activities::orderBy('start_date_local', 'desc')->first();
-    
+
         $firstYear = date('Y', strtotime($firstActivity->start_date_local));
         $lastYear = date('Y', strtotime($lastActivity->start_date_local));
-    
+
         $currentDayOfYear = date('z') + 1; // Day of the year starting from 1
-    
+
         $year = $lastYear;
-    
+
         for ($year; $firstYear <= $year; $year--) {
             $yearStats[$year] = $app->make('stdClass');
             $yearStats[$year]->year = $year;
@@ -38,26 +38,27 @@ class StatsController extends Controller
             $yearStats[$year]->run = round(Activities::where('type', 'Run')
                 ->whereYear('start_date_local', $year)
                 ->sum('distance') / 1000, 2);
-    
+
+            // Calculate yearStatsAtDay
             $yearStatsAtDay[$year] = $app->make('stdClass');
             $yearStatsAtDay[$year]->year = $year;
             $yearStatsAtDay[$year]->swim = round(Activities::where('type', 'Swim')
                 ->whereYear('start_date_local', $year)
-                ->whereDayOfYear('start_date_local', '<=', $currentDayOfYear)
+                ->whereRaw('DAYOFYEAR(start_date_local) <= ?', [$currentDayOfYear])
                 ->sum('distance') / 1000, 2);
             $yearStatsAtDay[$year]->bike = round((Activities::where('type', 'Ride')
                 ->whereYear('start_date_local', $year)
-                ->whereDayOfYear('start_date_local', '<=', $currentDayOfYear)
+                ->whereRaw('DAYOFYEAR(start_date_local) <= ?', [$currentDayOfYear])
                 ->sum('distance') + Activities::where('type', 'VirtualRide')
                 ->whereYear('start_date_local', $year)
-                ->whereDayOfYear('start_date_local', '<=', $currentDayOfYear)
+                ->whereRaw('DAYOFYEAR(start_date_local) <= ?', [$currentDayOfYear])
                 ->sum('distance')) / 1000, 2);
             $yearStatsAtDay[$year]->run = round(Activities::where('type', 'Run')
                 ->whereYear('start_date_local', $year)
-                ->whereDayOfYear('start_date_local', '<=', $currentDayOfYear)
+                ->whereRaw('DAYOFYEAR(start_date_local) <= ?', [$currentDayOfYear])
                 ->sum('distance') / 1000, 2);
         }
-    
+
         return view('stats', compact('yearStats', 'yearStatsAtDay'));
     }
     
