@@ -10,31 +10,42 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <table>
-                        <thead>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
+                <table>
+                    <thead>
+                        <tr>
                             <th></th>
                             <th>Natation</th>
                             <th>Vélo</th>
                             <th>Course</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($yearStats as $stat)
-                                <tr>
-                                    <td><a href={{ route('stats.months', $stat->year)}}>{{ $stat->year }}</a></td>
-                                     <td>{{ str_replace('.', ',', $stat->swim) }} km</td>
-                                    <td>{{ str_replace('.', ',', $stat->bike) }} km</td>
-                                    <td>{{ str_replace('.', ',', $stat->run) }} km</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($yearStats as $year => $stat)
+                            <tr>
+                                <td><a href="{{ route('stats.months', $stat->year) }}">{{ $stat->year }}</a></td>
+                                <td>
+                                    {{ str_replace('.', ',', $stat->swim) }} km
+                                    <small>({{ str_replace('.', ',', $yearStatsAtDay[$year]->swim) }} km)</small>
+                                </td>
+                                <td>
+                                    {{ str_replace('.', ',', $stat->bike) }} km
+                                    <small>({{ str_replace('.', ',', $yearStatsAtDay[$year]->bike) }} km)</small>
+                                </td>
+                                <td>
+                                    {{ str_replace('.', ',', $stat->run) }} km
+                                    <small>({{ str_replace('.', ',', $yearStatsAtDay[$year]->run) }} km)</small>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </x-app-layout>
 
 <style>

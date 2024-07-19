@@ -886,6 +886,7 @@
             </div>
         @endforeach
     </div>
+    
     <div class="chartLine">
         <div>
             <h2>Semaine dernière</h2>
