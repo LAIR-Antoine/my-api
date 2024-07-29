@@ -931,6 +931,8 @@
     <div>
         <p>Eddington number : {{ $eddingtonNumber }}</p>
         <p><small>Nombre de jour X où j'ai déjà fait plus de X kilomètres à vélo</small></p>
+        <p>{{ $eddingtonNumberNextLevel }} sortie(s) de {{ $eddingtonNumber }} km pour atteindre le palier {{ $eddingtonNumber + 1 }}</p>
+
     </div>
     <script>
         var daysOfWeek = @json($pastWeekActivities['dates']);

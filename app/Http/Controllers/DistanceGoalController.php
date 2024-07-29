@@ -201,6 +201,16 @@ class DistanceGoalController extends Controller
         }
 
 
+
+        $eddingtonNumberNextLevel = Activities::where('type', 'LIKE', '%Ride%')
+                ->get()
+                ->filter(function ($activity) use ($eddingtonNumber) {
+                    return ($activity->distance / 1000) >= $eddingtonNumber;
+                })
+                ->count();
+
+
+
         return view('welcome', compact(
             'activeGoals',
             'curWeekAct',
@@ -213,6 +223,7 @@ class DistanceGoalController extends Controller
             'runLastYear',
             'runThisYear',
             'eddingtonNumber'
+            'eddingtonNumberNextLevel'
         ));
     }
 
