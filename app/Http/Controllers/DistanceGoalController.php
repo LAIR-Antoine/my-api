@@ -182,6 +182,25 @@ class DistanceGoalController extends Controller
         $runLastYear = $this->getYearDistancePerMonthPerSport('2023', 'Run');
         $runThisYear = $this->getYearDistancePerMonthPerSport('2024', 'Run');
 
+
+        $eddingtonNumber = 0;
+
+        $maxRide = Activities::where('type', 'LIKE', '%Ride%')
+            ->max('distance') / 1000;
+
+            for ($i = 1; $i <= $maxRide; $i++) {
+            $activities = Activities::where('type', 'LIKE', '%Ride%')
+                ->get();
+            $activities = $activities->filter(function ($activity) use ($i) {
+                return $activity->distance >= $i;
+            });
+            if ($activities->count() < $i) {
+                $eddingtonNumber = $i - 1;
+                break;
+            }
+        }
+
+
         return view('welcome', compact(
             'activeGoals',
             'curWeekAct',
@@ -192,7 +211,8 @@ class DistanceGoalController extends Controller
             'bikeLastYear',
             'bikeThisYear',
             'runLastYear',
-            'runThisYear'
+            'runThisYear',
+            'eddingtonNumber'
         ));
     }
 

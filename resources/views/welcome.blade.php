@@ -927,6 +927,11 @@
             <canvas id="sportTimeChart9" width="400" height="200"></canvas>
         </div>
     </div>
+
+    <div>
+        <p>Eddington number : {{ $eddingtonNumber }}</p>
+        <p><small>Nombre de jour X où j'ai déjà fait plus de X kilomètres à vélo</small></p>
+    </div>
     <script>
         var daysOfWeek = @json($pastWeekActivities['dates']);
         var swim = @json($pastWeekActivities[0]);
