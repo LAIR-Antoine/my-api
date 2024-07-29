@@ -222,7 +222,7 @@ class DistanceGoalController extends Controller
             'bikeThisYear',
             'runLastYear',
             'runThisYear',
-            'eddingtonNumber'
+            'eddingtonNumber',
             'eddingtonNumberNextLevel'
         ));
     }
