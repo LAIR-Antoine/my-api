@@ -928,7 +928,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="eddingtonNumber">
         <p>Eddington number : {{ $eddingtonNumber }}</p>
         <p><small>Nombre de jour X où j'ai déjà fait plus de X kilomètres à vélo</small></p>
         <p>{{ $eddingtonNumberNextLevel }} sortie(s) de {{ $eddingtonNumber +1 }} km pour atteindre le palier {{ $eddingtonNumber + 1 }}</p>
@@ -1571,6 +1571,14 @@
             color: rgba(0, 0, 128, 1);
             background-color: rgba(240, 240, 240, 1);
         } */
+         .eddingtonNumber {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            color: rgb(69, 148, 209) !important;
+         }
     </style>
 </body>
 
