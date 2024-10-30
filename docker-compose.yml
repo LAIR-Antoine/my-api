@@ -1,0 +1,62 @@
+services:
+  apache:
+    build:
+      context: "./docker/apache"
+      args:
+        currentUser: $USER
+        uid: $UID
+        gid: $GID
+    volumes:
+      - ./:/var/www/html
+    container_name: "${PROJECT_NAME}_apache"
+    labels:
+      - "traefik.backend=${PROJECT_NAME}_apache"
+      - "traefik.docker.network=traefik"
+      - "traefik.frontend.rule=Host:${PROJECT_BASE_URL}"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.default.protocol=http"
+    networks:
+      traefik:
+        ipv4_address: ${PROJECT_IPV4}
+  cli:
+    build:
+      context: "./docker/cli"
+      args:
+        currentUser: $USER
+        uid: $UID
+        gid: $GID
+    working_dir: /var/www/html
+    container_name: "${PROJECT_NAME}_cli"
+    volumes:
+      - ./:/var/www/html
+      - ~/.composer:/home/$USER/.composer
+      - /tmp:/tmp
+      - ./.php_cs.dist:$PWD/.php_cs.dist
+    environment:
+      - LARAVEL_ROOT=/var/www/html
+    networks:
+      - traefik
+
+  mysql:
+    build: ./docker/mysql
+    ports:
+      - ${MYSQL_PORT}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=laravel
+      - MYSQL_DATABASE=laravel
+    volumes:
+      - ./var/mysql-data:/var/lib/mysql
+    container_name: "${PROJECT_NAME}_mysql"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    name: "traefik_${PROJECT_NAME}"
+    external: true
+volumes:
+  esdata1:
+    driver: local

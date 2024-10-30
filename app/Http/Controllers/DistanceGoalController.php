@@ -200,16 +200,12 @@ class DistanceGoalController extends Controller
             }
         }
 
-
-
         $eddingtonNumberNextLevel = ($eddingtonNumber + 1) - (Activities::where('type', 'LIKE', '%Ride%')
                 ->get()
                 ->filter(function ($activity) use ($eddingtonNumber) {
-                    return ($activity->distance / 1000) >= $eddingtonNumber;
+                    return ($activity->distance / 1000) >= $eddingtonNumber + 1;
                 })
                 ->count());
-
-
 
         return view('welcome', compact(
             'activeGoals',
