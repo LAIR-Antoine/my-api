@@ -142,7 +142,7 @@ var chart4 = new Chart(ctx4, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Natation - 2023',
+            label: 'Natation - 2024',
             data: window.chartData.swimLastYear,
             backgroundColor: 'rgba(69, 148, 209, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1
@@ -181,7 +181,7 @@ var chart5 = new Chart(ctx5, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Natation - 2024',
+            label: 'Natation - 2025',
             data: window.chartData.swimThisYear,
             backgroundColor: 'rgba(69, 148, 209, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1
@@ -228,7 +228,7 @@ var chart6 = new Chart(ctx6, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Vélo - 2023',
+            label: 'Vélo - 2024',
             data: window.chartData.bikeLastYear,
             backgroundColor: 'rgba(100, 217, 208, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1
@@ -267,7 +267,7 @@ var chart7 = new Chart(ctx7, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Vélo - 2024',
+            label: 'Vélo - 2025',
             data: window.chartData.bikeThisYear,
             backgroundColor: 'rgba(100, 217, 208, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1
@@ -314,7 +314,7 @@ var chart8 = new Chart(ctx8, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Course - 2023',
+            label: 'Course - 2024',
             data: window.chartData.runLastYear,
             backgroundColor: 'rgba(255, 196, 0, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1
@@ -355,7 +355,7 @@ var chart9 = new Chart(ctx9, {
         //labels: monthOfYear,
         datasets: [{
             barThickness: 20,
-            label: 'Course - 2024',
+            label: 'Course - 2025',
             data: window.chartData.runThisYear,
             backgroundColor: 'rgba(255, 196, 0, 1)',
             stack: 'stack1' // Assign a stack name for Sport 1

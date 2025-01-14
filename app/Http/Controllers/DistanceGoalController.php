@@ -173,14 +173,14 @@ class DistanceGoalController extends Controller
 
         $fiveLastWeeks = $this->getFiveLastWeeksForChart();
 
-        $swimLastYear = $this->getYearDistancePerMonthPerSport('2023', 'Swim');
-        $swimThisYear = $this->getYearDistancePerMonthPerSport('2024', 'Swim');
+        $swimLastYear = $this->getYearDistancePerMonthPerSport('2024', 'Swim');
+        $swimThisYear = $this->getYearDistancePerMonthPerSport('2025', 'Swim');
 
-        $bikeLastYear = $this->getYearDistancePerMonthPerSport('2023', 'Ride');
-        $bikeThisYear = $this->getYearDistancePerMonthPerSport('2024', 'Ride');
+        $bikeLastYear = $this->getYearDistancePerMonthPerSport('2024', 'Ride');
+        $bikeThisYear = $this->getYearDistancePerMonthPerSport('2025', 'Ride');
 
-        $runLastYear = $this->getYearDistancePerMonthPerSport('2023', 'Run');
-        $runThisYear = $this->getYearDistancePerMonthPerSport('2024', 'Run');
+        $runLastYear = $this->getYearDistancePerMonthPerSport('2024', 'Run');
+        $runThisYear = $this->getYearDistancePerMonthPerSport('2025', 'Run');
 
 
         $eddingtonNumber = 0;
