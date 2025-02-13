@@ -232,12 +232,17 @@ class StravaController extends Controller
     public function updateActivity(Request $request, Activities $activity)
     {
         if ($activity->type === 'Swim') {
-            if ($request->input('use_elapsed_time') === '1') {
-                $activity->moving_time = $activity->elapsed_time;
-            } else {
-                $activity->moving_time = $activity->elapsed_time;
+            $hours = (int)$request->input('hours', 0);
+            $minutes = (int)$request->input('minutes', 0);
+            $seconds = (int)$request->input('seconds', 0);
+
+            $movingTime = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+            // Validate that moving time doesn't exceed elapsed time
+            if ($movingTime <= $activity->elapsed_time) {
+                $activity->moving_time = $movingTime;
+                $activity->save();
             }
-            $activity->save();
         }
 
         return back();

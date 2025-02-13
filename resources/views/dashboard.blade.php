@@ -57,12 +57,20 @@
                                 $minutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
                                 $secs = str_pad($secs, 2, '0', STR_PAD_LEFT);
 
-                                return ($hours > 0 ? $hours . 'h' : '') . $minutes . '\'' . $secs . '"';
+                                return $hours . 'h' . $minutes . '\'' . $secs . '"';
                             }
                         @endphp
 
                         @foreach ($activities as $activity)
                             @php
+                                $movingHours = floor($activity->moving_time / 3600);
+                                $movingMinutes = floor(($activity->moving_time / 60) % 60);
+                                $movingSeconds = $activity->moving_time % 60;
+
+                                $elapsedHours = floor($activity->elapsed_time / 3600);
+                                $elapsedMinutes = floor(($activity->elapsed_time / 60) % 60);
+                                $elapsedSeconds = $activity->elapsed_time % 60;
+
                                 $movingTime = formatActivityTime($activity->moving_time);
                                 $elapsedTime = formatActivityTime($activity->elapsed_time);
                             @endphp
@@ -92,26 +100,46 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($activity->type == 'Swim')
                                         <div class="flex items-center space-x-2">
-                            <span class="time-display" data-moving="{{ $movingTime }}" data-elapsed="{{ $elapsedTime }}">
-                                {{ $movingTime }}
-                            </span>
-                                            <form action="{{ route('activities.update', $activity->id) }}" method="POST" class="inline">
+                                            <form action="{{ route('activities.update', $activity->id) }}"
+                                                  method="POST"
+                                                  class="inline-flex items-center space-x-2"
+                                                  onsubmit="return validateTime(this)">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="use_elapsed_time" value="{{ $activity->moving_time === $activity->elapsed_time ? '0' : '1' }}">
+                                                <div class="flex items-center space-x-1">
+                                                    <input type="number"
+                                                           name="hours"
+                                                           value="{{ $movingHours }}"
+                                                           class="time-input w-12 px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                           min="0"
+                                                           max="23">
+                                                    <span>h</span>
+                                                    <input type="number"
+                                                           name="minutes"
+                                                           value="{{ str_pad($movingMinutes, 2, '0', STR_PAD_LEFT) }}"
+                                                           class="time-input w-14 px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                           min="0"
+                                                           max="59">
+                                                    <span>'</span>
+                                                    <input type="number"
+                                                           name="seconds"
+                                                           value="{{ str_pad($movingSeconds, 2, '0', STR_PAD_LEFT) }}"
+                                                           class="time-input w-14 px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                           min="0"
+                                                           max="59">
+                                                    <span>"</span>
+                                                </div>
+                                                <input type="hidden" name="elapsed_time" value="{{ $activity->elapsed_time }}">
                                                 <button type="submit"
-                                                        class="inline-flex items-center px-2 py-1 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                        title="Basculer entre temps en mouvement et temps écoulé">
+                                                        class="inline-flex items-center px-2 py-1 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                                     </svg>
                                                 </button>
                                             </form>
-                                            @if($activity->moving_time !== $activity->elapsed_time)
-                                                <span class="text-gray-400 text-xs">
-                                    ({{ $activity->moving_time === $activity->elapsed_time ? $movingTime : $elapsedTime }})
-                                </span>
-                                            @endif
+                                            <span class="text-gray-400 text-xs">
+                                (max: {{ $elapsedTime }})
+                            </span>
                                         </div>
                                     @else
                                         {{ $movingTime }}
@@ -132,15 +160,32 @@
 </x-app-layout>
 
 <script>
-    document.querySelectorAll('.time-switch').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const display = this.previousElementSibling;
-            const moving = display.dataset.moving;
-            const elapsed = display.dataset.elapsed;
-            const isMoving = display.textContent.trim() === moving;
+    function validateTime(form) {
+        const hours = parseInt(form.querySelector('input[name="hours"]').value) || 0;
+        const minutes = parseInt(form.querySelector('input[name="minutes"]').value) || 0;
+        const seconds = parseInt(form.querySelector('input[name="seconds"]').value) || 0;
+        const elapsedTime = parseInt(form.querySelector('input[name="elapsed_time"]').value);
 
-            display.textContent = isMoving ? elapsed : moving;
+        // Convert to total seconds
+        const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+        if (totalSeconds > elapsedTime) {
+            alert('Le temps en mouvement doit être inférieur ou égal au temps écoulé');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Ensure two digits for minutes and seconds
+    document.querySelectorAll('input[name="minutes"], input[name="seconds"]').forEach(input => {
+        input.addEventListener('input', function(e) {
+            if (this.value < 10 && this.value.length === 1) {
+                this.value = '0' + this.value;
+            }
+            if (this.value > 59) {
+                this.value = '59';
+            }
         });
     });
 </script>
@@ -177,8 +222,39 @@
         font-weight: bold;
         text-align: center;
     }
-    .time-display {
-        min-width: 70px;
-        display: inline-block;
+    .time-input {
+        font-family: monospace;
+    }
+
+    .time-input::-webkit-inner-spin-button,
+    .time-input::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .pagination > * {
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        color: rgb(69, 148, 209);
+    }
+
+    .pagination span.current-page {
+        background-color: rgb(69, 148, 209);
+        color: white;
+    }
+
+    .pagination a:hover {
+        background-color: rgb(229, 241, 248);
     }
 </style>
