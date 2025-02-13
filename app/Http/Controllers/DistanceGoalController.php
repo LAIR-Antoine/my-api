@@ -45,7 +45,7 @@ class DistanceGoalController extends Controller
 
     public function edit(DistanceGoal $distanceGoal)
     {
-        return view('distance_goal.edit', compact('distance_goal'));
+        return view('distance_goal.edit', compact('distanceGoal'));
     }
 
     public function update(Request $request, DistanceGoal $distanceGoal)

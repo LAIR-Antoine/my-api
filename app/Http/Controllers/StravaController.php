@@ -23,76 +23,7 @@ class StravaController extends Controller
             $this->getToken($request);
         }
 
-        $googleCalendar = config('calendar.url');
-        $client = new Client();
-        $response = $client->get($googleCalendar);
-        $icalFile = $response->getBody()->getContents();
-
-
-        try {
-            $ical = new ICal($icalFile, array(
-                'defaultSpan'                 => 2,     // Default value
-                'defaultTimeZone'             => 'UTC',
-                'defaultWeekStart'            => 'MO',  // Default value
-                'disableCharacterReplacement' => false, // Default value
-                'filterDaysAfter'             => null,  // Default value
-                'filterDaysBefore'            => null,  // Default value
-                'httpUserAgent'               => null,  // Default value
-                'skipRecurrence'              => false, // Default value
-            ));
-            //dd($ical);
-            $today = Carbon::today();
-
-// Get the date 10 days from today
-            $tenDaysLater = $today->copy()->addDays(15);
-
-// Call the eventsFromRange method with dynamic dates
-            $actualEvents = $ical->eventsFromRange($today->toDateString(), $tenDaysLater->toDateString());
-            //dd($actualEvents);
-            $calendar = $this->extractIcsData($actualEvents);
-        } catch (\Exception $e) {
-            die($e);
-        }
-
-
-        return view('dashboard', compact('activities', 'user', 'calendar'));
-    }
-
-    public function extractIcsData($events)
-    {
-        $formattedEvents = [];
-        foreach ($events as $index => $event) {
-            $description = $event->description;
-            if (str_contains($event->summary, '[Note]') || str_contains($event->summary, '[Cycle]')) {
-                continue;
-            } else {
-                $formattedEvents[$index]['name'] = preg_replace('/[\x🏊🚴🏃♂️]/u', '', $event->summary);
-                $formattedEvents[$index]['date'] = $this->convertIcsDate($event->dtstart);
-                if (str_contains($event->summary, '🏃')) {
-                    $formattedEvents[$index]['type'] = 'Run';
-                } elseif (str_contains($event->summary, '🏊')) {
-                    $formattedEvents[$index]['type'] = 'Swim';
-                } elseif (str_contains($event->summary, '🚴')) {
-                    $formattedEvents[$index]['type'] = 'Ride';
-                } else {
-                    $formattedEvents[$index]['type'] = 'Other';
-                }
-
-                if (preg_match('/Durée\s*:\s*(\d{1,2}:\d{2}:\d{2})/', $description, $matches)) {
-                    $formattedEvents[$index]['duration'] = $this->convertTime($matches[1]);
-                }
-            }
-        }
-
-        return $formattedEvents;
-    }
-
-    public function convertIcsDate($date)
-    {
-        // yyyymmdd to dd/mm/yyyy
-        $date = substr($date, 6, 2) . '/' . substr($date, 4, 2) . '/' . substr($date, 0, 4);
-
-        return $date;
+        return view('dashboard', compact('activities', 'user'));
     }
 
     public function convertTime($time)
