@@ -775,3 +775,32 @@ video {
         padding: 2rem
     }
 }
+
+
+.goals-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 50px auto 20px auto;
+    gap: 1rem;
+}
+
+.goal-card {
+    margin: 0; /* Remove margin since we're using gap */
+    flex: 0 1 calc(33.333% - 2rem); /* This ensures 3 cards per row with proper spacing */
+    min-width: 300px; /* Maintain minimum width */
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .goal-card {
+        flex: 0 1 calc(50% - 2rem); /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .goal-card {
+        flex: 0 1 100%; /* 1 card per row on small screens */
+    }
+}

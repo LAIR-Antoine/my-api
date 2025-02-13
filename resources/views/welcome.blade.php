@@ -42,7 +42,7 @@
 
 
     <a class="refresh-button" href={{ route('refresh.goals') }}>Refresh</a>
-    <div class="goals-list">
+    <div class="goals-list" style="max-width: 1200px; margin-left: auto; margin-right: auto;">
         @foreach ($activeGoals as $goal)
             <div class="goal-card">
                 @if ($goal->sport == 'swim')
@@ -59,16 +59,18 @@
                     {{ $goal->distance_to_do }} km</p>
                 @if ($goal->avancement != 0)
                     <div class="w3-container">
-
                         <div class="w3-light-grey w3-round-xlarge">
-                            <div class="w3-container w3-blue w3-round-xlarge" style="width:{{ $goal->avancement <= 100 ? $goal->avancement : 100 }}%">
-                                {{ $goal->avancement }}%</div>
+                            <div class="w3-container w3-blue w3-round-xlarge"
+                                 style="width:{{ $goal->avancement <= 100 ? $goal->avancement : 100 }}%">
+                                {{ $goal->avancement }}%
+                            </div>
                         </div>
                     </div>
                     <p @if ($goal->gapGoal >= 0) class="green" @else class="red" @endif>
                         @if ($goal->gapGoal > 0)
                             +
-                        @endif{{ str_replace('.', ',', $goal->gapGoal) }} km
+                        @endif
+                        {{ str_replace('.', ',', $goal->gapGoal) }} km
                     </p>
                 @endif
             </div>

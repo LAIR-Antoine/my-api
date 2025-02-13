@@ -44,6 +44,7 @@ Route::post('/habbits', [HabbitsController::class, 'store'])->middleware(['auth'
 Route::get('/habbits/day/{date}', [HabbitsController::class, 'getHabitsForDay'])->name('habbits.forDay');
 Route::get('/habbits/archive', [HabbitsController::class, 'archive'])->middleware(['auth', 'verified'])->name('habbits.archive');
 
+Route::put('/activities/{activity}', [StravaController::class, 'updateActivity'])->name('activities.update');
 
 Route::resource('distance_goal', DistanceGoalController::class)->middleware(['auth', 'verified'])->name('index', 'distance_goal');
 

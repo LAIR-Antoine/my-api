@@ -74,7 +74,14 @@ class DistanceGoalController extends Controller
 
     public function welcome()
     {
-        $activeGoals = DistanceGoal::where('state', 'active')->orderBy('begin_date', 'asc')->get();
+        $activeGoals = DistanceGoal::where('state', 'active')
+            ->orderBy('begin_date', 'asc')
+            ->orderByRaw("CASE
+                        WHEN sport = 'swim' THEN 1
+                        WHEN sport = 'bike' THEN 2
+                        WHEN sport = 'run' THEN 3
+                        END")
+            ->get();
 
         foreach ($activeGoals as $goal) {
             $goal->avancement = round($goal->distance_done / $goal->distance_to_do * 100);

@@ -17,7 +17,7 @@ class StravaController extends Controller
     public function dashboard(Request $request)
     {
         $user = User::find(auth()->id());
-        $activities = Activities::orderBy('start_date_local', 'desc')->paginate(15);
+        $activities = Activities::orderBy('start_date_local', 'desc')->paginate(20);
 
         if ($request->code && !$user->strava_access_token) {
             $this->getToken($request);
@@ -227,5 +227,19 @@ class StravaController extends Controller
         }
 
         return redirect()->route('welcome');
+    }
+
+    public function updateActivity(Request $request, Activities $activity)
+    {
+        if ($activity->type === 'Swim') {
+            if ($request->input('use_elapsed_time') === '1') {
+                $activity->moving_time = $activity->elapsed_time;
+            } else {
+                $activity->moving_time = $activity->elapsed_time;
+            }
+            $activity->save();
+        }
+
+        return back();
     }
 }
