@@ -176,8 +176,6 @@ class DistanceGoalController extends Controller
             }
         }
 
-        //dd($curWeekAct, $pastWeekActivities);
-
         $fiveLastWeeks = $this->getFiveLastWeeksForChart();
 
         $swimLastYear = $this->getYearDistancePerMonthPerSport('2024', 'Swim');
@@ -505,8 +503,6 @@ class DistanceGoalController extends Controller
         $weekStat['totalTimeRun'] = array_sum($weekStat[2]);
         $weekStat['totalTime'] = $weekStat['totalTimeSwim'] + $weekStat['totalTimeBike'] + $weekStat['totalTimeRun'];
 
-
-        //dd($weekStat);
         return $weekStat;
     }
 

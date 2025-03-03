@@ -209,7 +209,7 @@ class StravaController extends Controller
 
         foreach ($goals as $goal) {
             $activities = Activities::where('start_date_local', '>=', $goal->begin_date)
-                ->where('start_date_local', '<=', $goal->end_date)
+                ->where('start_date_local', '<=', Carbon::parse($goal->end_date)->addDay())
                 ->get();
 
             $goal->distance_done = 0;
