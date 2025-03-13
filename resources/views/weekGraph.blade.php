@@ -46,17 +46,28 @@
 
                     <div class="weekReport">
                         @php
-                            $hoursSwim = floor($weekStat['totalTimeSwim']);
-                            $minutesSwim = round(($weekStat['totalTimeSwim'] - $hoursSwim) * 60);
+                            // Helper function to format time
+                            function formatHoursMinutes($totalHours) {
+                                $hours = floor($totalHours);
+                                $minutes = round(($totalHours - $hours) * 60);
 
-                            $hoursBike = floor($weekStat['totalTimeBike']);
-                            $minutesBike = round(($weekStat['totalTimeBike'] - $hoursBike) * 60);
+                                // Handle case where rounding minutes results in 60
+                                if ($minutes >= 60) {
+                                    $hours += 1;
+                                    $minutes = 0;
+                                }
 
-                            $hoursRun = floor($weekStat['totalTimeRun']);
-                            $minutesRun = round(($weekStat['totalTimeRun'] - $hoursRun) * 60);
+                                return [
+                                    'hours' => $hours,
+                                    'minutes' => str_pad($minutes, 2, '0', STR_PAD_LEFT)
+                                ];
+                            }
 
-                            $hoursTotal = floor($weekStat['totalTime']);
-                            $minutesTotal = round(($weekStat['totalTime'] - $hoursTotal) * 60);
+                            // Format each sport's time
+                            $swim = formatHoursMinutes($weekStat['totalTimeSwim']);
+                            $bike = formatHoursMinutes($weekStat['totalTimeBike']);
+                            $run = formatHoursMinutes($weekStat['totalTimeRun']);
+                            $total = formatHoursMinutes($weekStat['totalTime']);
                         @endphp
 
                         <h2 class="text-2xl font-bold mb-4">
@@ -69,7 +80,7 @@
                                 <p class="swim text-xl">
                                     {{ str_replace('.', ',', round($weekStat['totalDistanceSwim'] /1000, 1)) }} km
                                     <span class="text-sm block text-gray-500">
-                                        {{ $hoursSwim }}h{{ str_pad($minutesSwim, 2, '0', STR_PAD_LEFT) }}
+                                        {{ $swim['hours'] }}h{{ $swim['minutes'] }}
                                     </span>
                                 </p>
                             </div>
@@ -79,7 +90,7 @@
                                 <p class="bike text-xl">
                                     {{ str_replace('.', ',', round($weekStat['totalDistanceBike'] /1000, 1)) }} km
                                     <span class="text-sm block text-gray-500">
-                                        {{ $hoursBike }}h{{ str_pad($minutesBike, 2, '0', STR_PAD_LEFT) }}
+                                        {{ $bike['hours'] }}h{{ $bike['minutes'] }}
                                     </span>
                                 </p>
                             </div>
@@ -89,7 +100,7 @@
                                 <p class="run text-xl">
                                     {{ str_replace('.', ',', round($weekStat['totalDistanceRun'] /1000, 1)) }} km
                                     <span class="text-sm block text-gray-500">
-                                        {{ $hoursRun }}h{{ str_pad($minutesRun, 2, '0', STR_PAD_LEFT) }}
+                                        {{ $run['hours'] }}h{{ $run['minutes'] }}
                                     </span>
                                 </p>
                             </div>
@@ -98,10 +109,9 @@
                         <div class="bg-gray-50 rounded-lg p-4 inline-block">
                             <p class="text-gray-600 text-sm">Total de la semaine</p>
                             <h2 class="text-2xl font-bold text-gray-800">
-                                {{ $hoursTotal }}h{{ str_pad($minutesTotal, 2, '0', STR_PAD_LEFT) }}
+                                {{ $total['hours'] }}h{{ $total['minutes'] }}
                             </h2>
                         </div>
-                    </div>
 
                     <script>
                         var daysOfWeek = @json($weekStat['dates']);

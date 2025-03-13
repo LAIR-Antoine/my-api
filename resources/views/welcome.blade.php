@@ -29,19 +29,18 @@
                 <a href="{{ url('/dashboard') }}" class="dashboard-button">Dashboard</a>
             @else
                 <a href="{{ route('login') }}"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                    in</a>
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Se connecter</a>
 
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}"
-                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">S'inscrire</a>
                 @endif
             @endauth
         </div>
     @endif
 
 
-    <a class="refresh-button" href={{ route('refresh.goals') }}>Refresh</a>
+    <a class="refresh-button" href={{ route('refresh.goals') }}>Rafraîchir</a>
     <div class="goals-list" style="max-width: 1200px; margin-left: auto; margin-right: auto;">
         @foreach ($activeGoals as $goal)
             <div class="goal-card">
